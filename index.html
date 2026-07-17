@@ -8,6 +8,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <script>
+        // Check if logged in before rendering the page
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'auth/login.html';
+        }
+    </script>
     <style>
         .game-grid {
             padding: 0 16px;
@@ -42,6 +48,10 @@
 
         .card-cb-blue {
             background: linear-gradient(180deg, #173d7a 0%, #061129 100%);
+        }
+
+        .card-hajari-green {
+            background: linear-gradient(180deg, #1b5e20 0%, #0a290d 100%);
         }
 
         .card-icon-wrapper {
@@ -100,6 +110,22 @@
             position: relative;
         }
 
+        .icon-circle-hajari {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #4caf50, #1b5e20);
+            border: 4px solid #a5d6a7;
+            box-shadow: inset -4px -4px 10px rgba(0,0,0,0.5), 0 8px 16px rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            color: #ffffff;
+            line-height: 1;
+            position: relative;
+        }
+
         .icon-crown {
             position: absolute;
             top: -12px;
@@ -149,9 +175,44 @@
 
         .card-btn.red-text { color: #a61b22; }
         .card-btn.blue-text { color: #173d7a; }
+        .card-btn.green-text { color: #1b5e20; }
+        
+        /* Custom Modal */
+        .custom-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: center; z-index: 10000;
+        }
+        .custom-modal {
+            background: #111b2b; border: 1px solid #2a3b5a; border-radius: 20px;
+            padding: 24px; width: 85%; max-width: 320px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            transform: scale(0.9); transition: transform 0.2s; opacity: 0;
+        }
+        .custom-modal.show { transform: scale(1); opacity: 1; }
+        .custom-modal-icon { font-size: 40px; margin-bottom: 12px; }
+        .custom-modal-title { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+        .custom-modal-text { font-family: 'Noto Sans Bengali', sans-serif; font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 24px; }
+        .custom-modal-actions { display: flex; gap: 12px; }
+        .cm-btn { flex: 1; padding: 12px 0; border-radius: 12px; font-family: 'Noto Sans Bengali', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; border: none; }
+        .cm-cancel { background: #2a3b5a; color: #fff; }
+        .cm-confirm { background: #e74c3c; color: #fff; }
     </style>
 </head>
 <body>
+    <!-- Custom Logout Modal -->
+    <div class="custom-modal-overlay" id="logoutModalOverlay">
+        <div class="custom-modal" id="logoutModal">
+            <div class="custom-modal-icon">🚪</div>
+            <div class="custom-modal-title">লগ আউট</div>
+            <div class="custom-modal-text">আপনি কি আসলেই লগ আউট করতে চান?</div>
+            <div class="custom-modal-actions">
+                <button class="cm-btn cm-cancel" onclick="closeLogoutModal()">না, থাক</button>
+                <button class="cm-btn cm-confirm" onclick="confirmLogout()">হ্যাঁ, লগ আউট</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Phone Frame -->
     <div class="phone-frame">
         <div class="screen active" id="dashboard-home" style="overflow-y: auto;">
@@ -189,6 +250,18 @@
                     <h2 class="card-title">কল ব্রিজ</h2>
                     <div class="card-subtitle" id="activePlayersCB">👥 ...</div>
                     <div class="card-btn blue-text">খেলুন ➔</div>
+                </div>
+
+                <!-- Hajari -->
+                <div class="game-grid-card card-hajari-green" onclick="window.location.href='hajari.html'">
+                    <div class="card-icon-wrapper">
+                        <div class="icon-circle-hajari">
+                            ♣️
+                        </div>
+                    </div>
+                    <h2 class="card-title">হাজারি</h2>
+                    <div class="card-subtitle" id="activePlayersHajari">👥 ...</div>
+                    <div class="card-btn green-text">খেলুন ➔</div>
                 </div>
             </div>
 
@@ -393,11 +466,6 @@
     <script src="js/firebase-config.js"></script>
     
     <script>
-        // Check if logged in
-        if (!localStorage.getItem('isLoggedIn')) {
-            window.location.href = 'auth/login.html';
-        }
-
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const screen = urlParams.get('screen');
@@ -527,17 +595,21 @@
                 
                 // Since we don't track separate game presence yet, we split the total users
                 // to give a realistic separate count for both games.
-                let p29Count = Math.ceil(totalUsers * 0.65);
-                let pCBCount = Math.floor(totalUsers * 0.35);
+                let p29Count = Math.ceil(totalUsers * 0.55);
+                let pCBCount = Math.floor(totalUsers * 0.25);
+                let pHajariCount = Math.floor(totalUsers * 0.20);
                 
                 // Ensure at least 1 if there are any users
                 if (totalUsers > 0 && pCBCount === 0) pCBCount = 1;
+                if (totalUsers > 0 && pHajariCount === 0) pHajariCount = 1;
                 
                 const p29El = document.getElementById('activePlayers29');
                 const pCBEl = document.getElementById('activePlayersCB');
+                const pHajariEl = document.getElementById('activePlayersHajari');
                 
                 if (p29El) p29El.textContent = `👥 ${p29Count.toLocaleString()} খেলছে`;
                 if (pCBEl) pCBEl.textContent = `👥 ${pCBCount.toLocaleString()} খেলছে`;
+                if (pHajariEl) pHajariEl.textContent = `👥 ${pHajariCount.toLocaleString()} খেলছে`;
                 
             } catch(e) {
                 console.error("Error fetching real player count:", e);
@@ -548,10 +620,22 @@
         animateActivePlayers();
 
         function logout() {
-            if(confirm('আপনি কি লগ আউট করতে চান?')) {
-                localStorage.removeItem('isLoggedIn');
-                window.location.href = 'auth/login.html';
-            }
+            const overlay = document.getElementById('logoutModalOverlay');
+            const modal = document.getElementById('logoutModal');
+            overlay.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+        
+        function closeLogoutModal() {
+            const overlay = document.getElementById('logoutModalOverlay');
+            const modal = document.getElementById('logoutModal');
+            modal.classList.remove('show');
+            setTimeout(() => overlay.style.display = 'none', 200);
+        }
+        
+        function confirmLogout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'auth/login.html';
         }
 
         async function loadLeaderboard() {

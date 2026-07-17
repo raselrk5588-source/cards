@@ -21,12 +21,12 @@ jobs:
             cd /var/www
             
             # If the folder doesn't exist, clone it
-            if [ ! -d "tasghor.rtsquad.com" ]; then
-              git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git tasghor.rtsquad.com
+            if [ ! -d "cardadda.rtsquad.com" ]; then
+              git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git cardadda.rtsquad.com
             fi
             
-            cd tasghor.rtsquad.com
-            git config --global --add safe.directory /var/www/tasghor.rtsquad.com
+            cd cardadda.rtsquad.com
+            git config --global --add safe.directory /var/www/cardadda.rtsquad.com
             
             # Update remote with current action token to prevent auth errors
             git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
@@ -37,14 +37,14 @@ jobs:
             git clean -fd
             
             # Setup Nginx if not already configured
-            NGINX_CONF="/etc/nginx/sites-available/tasghor.rtsquad.com"
+            NGINX_CONF="/etc/nginx/sites-available/cardadda.rtsquad.com"
             if [ ! -f "$NGINX_CONF" ]; then
               echo "Creating Nginx configuration..."
               cat << 'EOF' > $NGINX_CONF
             server {
                 listen 80;
-                server_name tasghor.rtsquad.com;
-                root /var/www/tasghor.rtsquad.com;
+                server_name cardadda.rtsquad.com;
+                root /var/www/cardadda.rtsquad.com;
                 index index.html index.htm index.php UIUX.html;
 
                 location / {
@@ -75,7 +75,7 @@ jobs:
                 apt-get update
                 apt-get install -y certbot python3-certbot-nginx
               fi
-              certbot --nginx --non-interactive --agree-tos -m admin@tasghor.rtsquad.com -d tasghor.rtsquad.com
+              certbot --nginx --non-interactive --agree-tos -m admin@cardadda.rtsquad.com -d cardadda.rtsquad.com
               echo "SSL configuration completed."
             else
               echo "SSL already configured."

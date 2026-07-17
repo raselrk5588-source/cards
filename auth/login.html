@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>২৯ কার্ড গেম</title>
+    <title>২৯ কার্ড ও কল ব্রিজ</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -29,14 +29,70 @@
                     <span class="pulse-dot"></span>
                     বাংলাদেশের জনপ্রিয় কার্ড গেম
                 </div>
-                <h1 class="ll-title">বন্ধুদের সাথে খেলুন<br>অরিজিনাল ২৯ কার্ড</h1>
+                <h1 class="ll-title">বন্ধুদের সাথে খেলুন<br>অরিজিনাল ২৯ কার্ড, কল ব্রিজ ও হাজারি</h1>
                 <p class="ll-subtitle">অফলাইন ও অনলাইন মাল্টিপ্লেয়ার গেম • কোনো অ্যাড নেই • ব্রাউজারেই খেলুন</p>
 
                 <!-- Premium Floating Cards Display -->
+                <style>
+                    .card-29 { left: 10px; top: 20px; transform: rotate(-15deg) translateZ(0); z-index: 1; }
+                    .card-cb { left: 90px; top: 10px; transform: rotate(5deg) translateZ(10px) scale(1.05); z-index: 2; box-shadow: 0 20px 30px rgba(0,0,0,0.5); }
+                    .card-hajari { left: 170px; top: 20px; transform: rotate(20deg) translateZ(20px) scale(1.1); z-index: 3; box-shadow: 0 25px 40px rgba(0,0,0,0.6); }
+                    
+                    .hero-cards-display:hover .card-29 { transform: rotate(-25deg) translate(-25px, 15px); }
+                    .hero-cards-display:hover .card-cb { transform: rotate(5deg) translate(0px, -10px) scale(1.1); }
+                    .hero-cards-display:hover .card-hajari { transform: rotate(30deg) translate(25px, 5px) scale(1.15); }
+                    
+                    .game-card-title { font-weight: 900; line-height: 1.1; text-align: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
+                    
+                    .icon-circle-29 {
+                        width: 85px; height: 85px; border-radius: 50%;
+                        background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
+                        border: 4px solid #fff3cd;
+                        box-shadow: inset -4px -4px 10px rgba(0,0,0,0.3), 0 8px 16px rgba(0,0,0,0.6);
+                        display: flex; justify-content: center; align-items: center;
+                        font-family: 'Inter', sans-serif; font-size: 38px; font-weight: 900;
+                        color: #800000; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+                    }
+                    .icon-circle-cb {
+                        width: 85px; height: 85px; border-radius: 50%;
+                        background: radial-gradient(circle at 30% 30%, #1a2a40, #0a111f);
+                        border: 4px solid #f39c12;
+                        box-shadow: inset -4px -4px 10px rgba(0,0,0,0.5), 0 8px 16px rgba(0,0,0,0.6), 0 0 0 2px #fff8dc;
+                        display: flex; flex-direction: column; justify-content: center; align-items: center;
+                        font-size: 40px; color: #f39c12; line-height: 1; position: relative;
+                    }
+                    .icon-circle-hajari {
+                        width: 85px; height: 85px; border-radius: 50%;
+                        background: radial-gradient(circle at 30% 30%, #4caf50, #1b5e20);
+                        border: 4px solid #a5d6a7;
+                        box-shadow: inset -4px -4px 10px rgba(0,0,0,0.5), 0 8px 16px rgba(0,0,0,0.6);
+                        display: flex; justify-content: center; align-items: center;
+                        font-size: 40px; color: #ffffff; line-height: 1; position: relative;
+                    }
+                    .icon-crown { position: absolute; top: -12px; font-size: 24px; }
+                </style>
                 <div class="hero-cards-display">
-                    <div class="hero-card card-1"><span class="suit">A♠</span></div>
-                    <div class="hero-card card-2"><span class="suit">K♥</span></div>
-                    <div class="hero-card card-3"><span class="suit">Q♦</span></div>
+                    <div class="hero-card card-29">
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; color: #a61b22; padding: 15px 10px;">
+                            <div style="align-self: flex-start; line-height: 1;"><span style="font-size: 1.8rem; font-weight: 900;">A</span><br><span style="font-size: 1.2rem;">♥</span></div>
+                            <div style="font-size: 3.5rem;">♥</div>
+                            <div style="align-self: flex-end; line-height: 1; transform: rotate(180deg);"><span style="font-size: 1.8rem; font-weight: 900;">A</span><br><span style="font-size: 1.2rem;">♥</span></div>
+                        </div>
+                    </div>
+                    <div class="hero-card card-cb">
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; color: #173d7a; padding: 15px 10px;">
+                            <div style="align-self: flex-start; line-height: 1;"><span style="font-size: 1.8rem; font-weight: 900;">K</span><br><span style="font-size: 1.2rem;">♠</span></div>
+                            <div style="font-size: 3.5rem;">♠</div>
+                            <div style="align-self: flex-end; line-height: 1; transform: rotate(180deg);"><span style="font-size: 1.8rem; font-weight: 900;">K</span><br><span style="font-size: 1.2rem;">♠</span></div>
+                        </div>
+                    </div>
+                    <div class="hero-card card-hajari">
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; color: #1b5e20; padding: 15px 10px;">
+                            <div style="align-self: flex-start; line-height: 1;"><span style="font-size: 1.8rem; font-weight: 900;">Q</span><br><span style="font-size: 1.2rem;">♣</span></div>
+                            <div style="font-size: 3.5rem;">♣</div>
+                            <div style="align-self: flex-end; line-height: 1; transform: rotate(180deg);"><span style="font-size: 1.8rem; font-weight: 900;">Q</span><br><span style="font-size: 1.2rem;">♣</span></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="ll-features">
@@ -67,7 +123,7 @@
                     </div>
 
                     <div class="lr-benefits">
-                        <div class="lrb-item"><i class="fa-solid fa-circle-check lrb-icon"></i> অরিজিনাল ২৯ গেম রুলস
+                        <div class="lrb-item"><i class="fa-solid fa-circle-check lrb-icon"></i> অরিজিনাল ২৯, কল ব্রিজ ও হাজারি
                         </div>
                         <div class="lrb-item"><i class="fa-solid fa-circle-check lrb-icon"></i> ব্রাউজারে সরাসরি খেলার
                             সুবিধা</div>
@@ -96,40 +152,40 @@
         </div>
     </div>
 
-    <!-- Features Section -->
+    <!-- Games Section -->
     <div class="landing-features-section">
         <div class="section-header">
             <span class="decor-line"></span>
-            <h2>আমাদের বিশেষ ফিচার</h2>
+            <h2>আমাদের গেমস সমূহ</h2>
             <span class="decor-line"></span>
         </div>
 
-        <div class="features-grid">
-            <div class="f-card">
-                <div class="fc-icon"><i class="fa-solid fa-globe"></i></div>
-                <div class="fc-title">অনলাইন মাল্টিপ্লেয়ার</div>
-                <div class="fc-subtitle">বিশ্বজুড়ে খেলোয়াড়দের সাথে খেলুন</div>
+        <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+            <div class="f-card" style="padding: 40px 20px;">
+                <div class="fc-icon" style="margin-bottom: 25px; display: flex; justify-content: center;">
+                    <div class="icon-circle-29">২৯</div>
+                </div>
+                <div class="fc-title" style="font-size: 1.8rem; margin-bottom: 10px;">২৯ কার্ড</div>
+                <div class="fc-subtitle">বাংলাদেশের সবচেয়ে জনপ্রিয় এবং ক্লাসিক ট্রিক-টেকিং কার্ড গেম।</div>
             </div>
-            <div class="f-card">
-                <div class="fc-icon"><i class="fa-solid fa-user-group"></i></div>
-                <div class="fc-title">বন্ধুর সাথে খেলুন</div>
-                <div class="fc-subtitle">রুম তৈরি করুন ও বন্ধুদের আমন্ত্রণ করুন</div>
+            
+            <div class="f-card" style="padding: 40px 20px;">
+                <div class="fc-icon" style="margin-bottom: 25px; display: flex; justify-content: center;">
+                    <div class="icon-circle-cb">
+                        <span class="icon-crown">👑</span>
+                        ♠️
+                    </div>
+                </div>
+                <div class="fc-title" style="font-size: 1.8rem; margin-bottom: 10px;">কল ব্রিজ</div>
+                <div class="fc-subtitle">বুদ্ধি এবং কৌশলের অত্যন্ত পরিচিত এবং জনপ্রিয় একটি গেম।</div>
             </div>
-            <div class="f-card">
-                <div class="fc-icon"><i class="fa-solid fa-robot"></i></div>
-                <div class="fc-title">বটের সাথে খেলুন</div>
-                <div class="fc-subtitle">স্মার্ট AI বটের সাথে অনুশীলন করুন</div>
-            </div>
-
-            <div class="f-card">
-                <div class="fc-icon"><i class="fa-solid fa-shield-alt"></i></div>
-                <div class="fc-title">সুরক্ষিত ও ফেয়ার প্লে</div>
-                <div class="fc-subtitle">নিরাপদ গেমিং ও ১০০% ফেয়ার প্লে</div>
-            </div>
-            <div class="f-card">
-                <div class="fc-icon"><i class="fa-solid fa-trophy"></i></div>
-                <div class="fc-title">লিডারবোর্ড ও র‍্যাংক</div>
-                <div class="fc-subtitle">লিডারবোর্ডে নিজের অবস্থান দেখুন</div>
+            
+            <div class="f-card" style="padding: 40px 20px;">
+                <div class="fc-icon" style="margin-bottom: 25px; display: flex; justify-content: center;">
+                    <div class="icon-circle-hajari">♣️</div>
+                </div>
+                <div class="fc-title" style="font-size: 1.8rem; margin-bottom: 10px;">হাজারি</div>
+                <div class="fc-subtitle">সেরা সেট মেলানোর অসাধারণ এবং চ্যালেঞ্জিং একটি কার্ড গেম।</div>
             </div>
         </div>
     </div>
