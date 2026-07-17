@@ -49,11 +49,32 @@ const FirebaseManager = {
         this.myUserId = phone; // Using phone number as unique ID
         
         const userRef = database.ref('online_users/' + this.myUserId);
+        const globalUserRef = database.ref('users/' + this.myUserId);
         
         // Listen for connection state
         const connectedRef = database.ref('.info/connected');
         connectedRef.on('value', (snap) => {
             if (snap.val() === true) {
+                // Also update the global users node for leaderboard
+                let stats = { wins: 0, matches: 0, winRate: 0 };
+                try {
+                    const statsStr = localStorage.getItem('29card_stats');
+                    if (statsStr) {
+                        const s = JSON.parse(statsStr);
+                        stats.wins = s.wins || 0;
+                        stats.matches = s.totalGames || 0;
+                        stats.winRate = s.winRate || 0;
+                    }
+                } catch(e) {}
+                
+                globalUserRef.update({
+                    name: name,
+                    phone: phone,
+                    avatar: avatar,
+                    stats: stats,
+                    last_login: firebase.database.ServerValue.TIMESTAMP
+                });
+
                 // When I disconnect, remove my node
                 userRef.onDisconnect().remove().then(() => {
                     // Set my status to online
