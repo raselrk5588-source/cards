@@ -6,10 +6,10 @@
  */
 const firebaseConfig = {
     apiKey: "dummy-api-key-for-rtdb",
-    authDomain: "card-ae1f3.firebaseapp.com",
-    databaseURL: "https://card-ae1f3-default-rtdb.firebaseio.com",
-    projectId: "card-ae1f3",
-    storageBucket: "card-ae1f3.appspot.com",
+    authDomain: "cardadda-afa34.firebaseapp.com",
+    databaseURL: "https://cardadda-afa34-default-rtdb.firebaseio.com",
+    projectId: "cardadda-afa34",
+    storageBucket: "cardadda-afa34.appspot.com",
     messagingSenderId: "123456789",
     appId: "1:123456789:web:dummy"
 };
