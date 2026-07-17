@@ -12,7 +12,7 @@
     <style>
         /* ===== OTP Page Specific Styles ===== */
 
-        /* Animated Gradient Background */
+        /* Animated Gradient Background matching game theme */
         body.otp-body {
             margin: 0;
             padding: 0;
@@ -21,41 +21,34 @@
             justify-content: center;
             align-items: center;
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background: #060e06; /* Dark game background */
             background-size: 400% 400%;
-            animation: gradientShift 12s ease infinite;
             overflow: hidden;
             position: relative;
         }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Floating Particles */
+        /* Floating Particles / Glows */
         body.otp-body::before,
         body.otp-body::after {
             content: '';
             position: fixed;
             border-radius: 50%;
             filter: blur(80px);
-            opacity: 0.3;
+            opacity: 0.15;
             z-index: 0;
             animation: floatBlob 8s ease-in-out infinite alternate;
         }
         body.otp-body::before {
             width: 350px;
             height: 350px;
-            background: #6c5ce7;
+            background: #d4a843; /* Gold */
             top: -80px;
             left: -80px;
         }
         body.otp-body::after {
             width: 300px;
             height: 300px;
-            background: #00cec9;
+            background: #1a4a23; /* Dark green accent */
             bottom: -60px;
             right: -60px;
             animation-delay: 2s;
@@ -70,20 +63,20 @@
         .otp-card {
             position: relative;
             z-index: 1;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(15, 38, 19, 0.45); /* Glass dark green */
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(212, 168, 67, 0.3); /* Gold border */
             border-radius: 24px;
-            padding: 48px 36px 40px;
-            width: 100%;
+            padding: 40px 24px 30px; /* Reduced padding for mobile */
+            width: 90%; /* Better mobile width */
             max-width: 400px;
-            margin: 20px;
+            margin: 20px auto;
             box-sizing: border-box;
             text-align: center;
             box-shadow:
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                0 8px 32px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
             animation: cardSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
             transform: translateY(30px);
@@ -120,33 +113,35 @@
 
         /* Shield Icon */
         .otp-icon-wrap {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 24px;
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #f0d078, #d4a843, #a07830); /* Gold gradient */
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 30px rgba(108, 92, 231, 0.4);
+            box-shadow: 0 8px 25px rgba(212, 168, 67, 0.4);
             animation: iconPulse 2s ease-in-out infinite;
         }
 
         @keyframes iconPulse {
-            0%, 100% { box-shadow: 0 8px 30px rgba(108, 92, 231, 0.4); transform: scale(1); }
-            50% { box-shadow: 0 8px 40px rgba(108, 92, 231, 0.6); transform: scale(1.05); }
+            0%, 100% { box-shadow: 0 8px 25px rgba(212, 168, 67, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 8px 35px rgba(212, 168, 67, 0.6); transform: scale(1.05); }
         }
 
         .otp-icon-wrap i {
-            font-size: 2rem;
-            color: #fff;
+            font-size: 1.8rem;
+            color: #060e06; /* Dark icon */
         }
 
         /* Title */
         .otp-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
-            color: #fff;
+            background: linear-gradient(135deg, #f0d078, #d4a843, #f0d078);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin: 0 0 8px;
             letter-spacing: -0.3px;
         }
@@ -161,10 +156,10 @@
 
         /* Phone display */
         .otp-phone-display {
-            color: #a29bfe;
+            color: #f0d078;
             font-size: 0.95rem;
             font-weight: 600;
-            margin: 0 0 28px;
+            margin: 0 0 24px;
             letter-spacing: 1px;
         }
 
@@ -172,36 +167,50 @@
         .otp-inputs {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             margin-bottom: 28px;
+            width: 100%;
         }
 
         .otp-inputs input {
-            width: 46px;
-            height: 54px;
+            width: 40px; /* Reduced for mobile */
+            height: 50px;
             text-align: center;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
             font-family: 'Inter', sans-serif;
             color: #fff;
-            background: rgba(255, 255, 255, 0.07);
-            border: 2px solid rgba(255, 255, 255, 0.12);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(212, 168, 67, 0.3); /* Gold border */
+            border-radius: 10px;
             outline: none;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            caret-color: #a29bfe;
+            caret-color: #f0d078;
+            padding: 0;
+        }
+
+        /* Very small screens adjustment */
+        @media (max-width: 360px) {
+            .otp-inputs input {
+                width: 35px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+            .otp-inputs {
+                gap: 4px;
+            }
         }
 
         .otp-inputs input:focus {
-            border-color: #6c5ce7;
-            background: rgba(108, 92, 231, 0.12);
-            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.15);
+            border-color: #d4a843;
+            background: rgba(212, 168, 67, 0.12);
+            box-shadow: 0 0 0 4px rgba(212, 168, 67, 0.15);
             transform: translateY(-2px);
         }
 
         .otp-inputs input.filled {
-            border-color: #00cec9;
-            background: rgba(0, 206, 201, 0.1);
+            border-color: #f0d078;
+            background: rgba(240, 208, 120, 0.1);
         }
 
         .otp-inputs input.error {
@@ -223,23 +232,23 @@
             width: 100%;
             padding: 16px;
             border: none;
-            border-radius: 14px;
+            border-radius: 12px;
             font-size: 1.05rem;
             font-weight: 700;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            color: #fff;
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.35);
+            color: #060e06; /* Dark text for contrast */
+            background: linear-gradient(135deg, #d4a843 0%, #f0d078 50%, #d4a843 100%);
+            box-shadow: 0 6px 20px rgba(212, 168, 67, 0.35);
             transition: all 0.3s ease;
             margin-bottom: 20px;
         }
 
         .otp-verify-btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(108, 92, 231, 0.5);
+            box-shadow: 0 8px 28px rgba(212, 168, 67, 0.5);
         }
 
         .otp-verify-btn:active:not(:disabled) {
@@ -307,20 +316,30 @@
             cursor: pointer;
             text-decoration: none;
             transition: color 0.2s;
+            text-align: center;
+            margin-top: 20px;
         }
-        .otp-resend-link:hover {
-            color: #6c5ce7;
-            text-decoration: underline;
+        .resend-text {
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.9rem;
+            font-weight: 500;
         }
-        .otp-resend-link.disabled {
-            color: rgba(255, 255, 255, 0.3);
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        .otp-timer {
-            color: #00cec9;
-            font-weight: 600;
+
+        .resend-timer {
+            color: #f0d078; /* Gold */
+            font-weight: 700;
             font-variant-numeric: tabular-nums;
+        }
+
+        .resend-link {
+            color: #d4a843;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .resend-link:hover {
+            color: #f0d078;
         }
 
         /* Success Animation */
