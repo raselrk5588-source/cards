@@ -1180,7 +1180,16 @@ const App = (() => {
                 localStorage.clear();
                 window.location.href = 'auth/login.html';
             } else {
-                alert(data.error || data.statusDetail || "আনসাবস্ক্রাইব করা সম্ভব হয়নি।");
+                const errorMsg = data.error || data.statusDetail || data.message || "আনসাবস্ক্রাইব করা সম্ভব হয়নি।";
+                alert(errorMsg);
+                
+                // If user is already unregistered or format is invalid, log them out
+                if (errorMsg.toLowerCase().includes("unregistered") || errorMsg.toLowerCase().includes("invalid")) {
+                    localStorage.clear();
+                    window.location.href = 'auth/login.html';
+                    return;
+                }
+                
                 if (btn) {
                     btn.disabled = false;
                     btn.innerHTML = "🚪 আনসাবস্ক্রাইব";
