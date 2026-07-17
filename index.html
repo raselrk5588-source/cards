@@ -1,117 +1,199 @@
 <!DOCTYPE html>
 <html lang="bn">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>২৯ কার্ড গেম</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
+    <title>গেম পোর্টাল</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=14">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .game-grid {
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 10px;
+            padding-bottom: 30px;
+        }
+
+        .game-grid-card {
+            border-radius: 20px;
+            padding: 24px 12px 20px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-decoration: none;
+        }
+
+        .game-grid-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+        }
+
+        .card-29-red {
+            background: linear-gradient(180deg, #a61b22 0%, #3d090c 100%);
+        }
+
+        .card-cb-blue {
+            background: linear-gradient(180deg, #173d7a 0%, #061129 100%);
+        }
+
+        .card-icon-wrapper {
+            position: relative;
+            height: 100px;
+            width: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .icon-cards-bg {
+            position: absolute;
+            font-size: 55px;
+            top: -15px;
+            left: -15px;
+            transform: rotate(-20deg);
+            z-index: 1;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
+        }
+
+        .icon-circle-29 {
+            position: relative;
+            z-index: 2;
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
+            border: 4px solid #fff3cd;
+            box-shadow: inset -4px -4px 10px rgba(0,0,0,0.3), 0 8px 16px rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 38px;
+            font-weight: 900;
+            color: #800000;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+
+        .icon-circle-cb {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #1a2a40, #0a111f);
+            border: 4px solid #f39c12;
+            box-shadow: inset -4px -4px 10px rgba(0,0,0,0.5), 0 8px 16px rgba(0,0,0,0.6), 0 0 0 2px #fff8dc;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            color: #f39c12;
+            line-height: 1;
+            position: relative;
+        }
+
+        .icon-crown {
+            position: absolute;
+            top: -12px;
+            font-size: 24px;
+        }
+
+        .card-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 6px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            letter-spacing: 0.5px;
+        }
+
+        .card-subtitle {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-btn {
+            background: #ffffff;
+            border-radius: 24px;
+            width: 85%;
+            padding: 10px 0;
+            text-align: center;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .game-grid-card:active .card-btn {
+            transform: scale(0.95);
+        }
+
+        .card-btn.red-text { color: #a61b22; }
+        .card-btn.blue-text { color: #173d7a; }
+    </style>
 </head>
-
 <body>
-
-
     <!-- Phone Frame -->
     <div class="phone-frame">
-
-        <!-- 1. SPLASH SCREEN -->
-        <div class="screen active" id="splash">
-            <div class="splash-bg-cards">
-                <div class="card-bg">♠</div>
-                <div class="card-bg">♥</div>
-                <div class="card-bg">♦</div>
-                <div class="card-bg">♣</div>
-            </div>
-            <div class="particles">
-                <div class="particle" style="left:20%;animation-delay:0s"></div>
-                <div class="particle" style="left:40%;animation-delay:1s"></div>
-                <div class="particle" style="left:60%;animation-delay:2s"></div>
-                <div class="particle" style="left:80%;animation-delay:0.5s"></div>
-                <div class="particle" style="left:30%;animation-delay:1.5s"></div>
-                <div class="particle" style="left:70%;animation-delay:2.5s"></div>
-            </div>
-            <div class="splash-glow"></div>
-            <div class="splash-logo">
-                <div class="splash-cards-fan">
-                    <div class="mini-card"><span class="suit-top">A</span><span class="suit-center">♠</span></div>
-                    <div class="mini-card"><span class="suit-top">K</span><span class="suit-center">♥</span></div>
-                    <div class="mini-card"><span class="suit-top">Q</span><span class="suit-center">♦</span></div>
-                    <div class="mini-card"><span class="suit-top">J</span><span class="suit-center">♣</span></div>
-                </div>
-                <div class="splash-title">২৯ কার্ড গেম</div>
-                <div class="splash-subtitle">CARD GAME</div>
-            </div>
-            <div class="splash-loading">
-                <div class="splash-loading-bar">
-                    <div class="splash-loading-fill"></div>
-                </div>
-                <div class="splash-loading-text">লোড হচ্ছে...</div>
-            </div>
-            <div class="splash-version">v1.0.0</div>
-        </div>
-
-        <!-- 2. HOME SCREEN -->
-        <div class="screen" id="home">
+        <div class="screen active" id="dashboard-home" style="overflow-y: auto;">
             <div class="top-bar">
-                <div class="avatar">
+                <div class="avatar" id="portalAvatar">
                     👤
-                    <div class="level-badge">25</div>
+                    <div class="level-badge" id="portalLevelBadge">25</div>
                 </div>
                 <div class="player-info">
-                    <div class="player-name">তারেক</div>
-                    <div class="player-level">লেভেল ২৫ • গোল্ড</div>
+                    <div class="player-name" id="portalUserName">খেলোয়াড়</div>
+                    <div class="player-level" id="portalPlayerLevel">লেভেল ২৫ • গোল্ড</div>
                 </div>
-                <div class="settings-btn" onclick="showScreen('settings')">⚙️</div>
+                <div class="settings-btn" onclick="showScreen('settings')" title="সেটিংস">⚙️</div>
             </div>
 
-            <div class="home-banner">
-                <div class="banner-label">🔥 দৈনিক চ্যালেঞ্জ</div>
-                <div class="banner-title">আজকের টুর্নামেন্ট</div>
-            </div>
-
-            <div class="home-menu">
-                <button class="btn-glass" onclick="showScreen('online')">
-                    <div class="icon">🌐</div>
-                    <div class="btn-text">অনলাইন খেলুন<span>বিশ্বজুড়ে খেলোয়াড়দের সাথে</span></div>
-                    <div class="arrow">›</div>
-                </button>
-                <button class="btn-glass" onclick="showScreen('createRoom')">
-                    <div class="icon">👥</div>
-                    <div class="btn-text">বন্ধুর সাথে খেলুন<span>প্রাইভেট রুম তৈরি করুন</span></div>
-                    <div class="arrow">›</div>
-                </button>
-                <button class="btn-glass" onclick="showScreen('botMode')">
-                    <div class="icon">🤖</div>
-                    <div class="btn-text">বটের সাথে খেলুন<span>AI এর বিরুদ্ধে অনুশীলন</span></div>
-                    <div class="arrow">›</div>
-                </button>
-                <button class="btn-glass" onclick="showScreen('localMulti')">
-                    <div class="icon">📶</div>
-                    <div class="btn-text">ল্যান মাল্টিপ্লেয়ার<span>ওয়াইফাই বা হটস্পট দিয়ে</span></div>
-                    <div class="arrow">›</div>
-                </button>
-            </div>
-
-            <div class="quick-actions">
-                <div class="quick-action-card" onclick="showScreen('howToPlay')">
-                    <div class="qa-icon">📖</div>
-                    <div class="qa-label">কিভাবে খেলবেন</div>
-                    <div class="qa-desc">নিয়মাবলী শিখুন</div>
+            <div class="game-grid">
+                <!-- 29 Card -->
+                <div class="game-grid-card card-29-red" onclick="window.location.href='29_card.html'">
+                    <div class="card-icon-wrapper">
+                        <div class="icon-circle-29">২৯</div>
+                    </div>
+                    <h2 class="card-title">২৯ কার্ড</h2>
+                    <div class="card-subtitle" id="activePlayers29">👥 ...</div>
+                    <div class="card-btn red-text">খেলুন ➔</div>
                 </div>
-                <div class="quick-action-card">
-                    <div class="qa-icon">🎁</div>
-                    <div class="qa-label">দৈনিক পুরস্কার</div>
-                    <div class="qa-desc">ফ্রি কয়েন নিন</div>
+
+                <!-- Call Bridge -->
+                <div class="game-grid-card card-cb-blue" onclick="window.location.href='call_bridge.html'">
+                    <div class="card-icon-wrapper">
+                        <div class="icon-circle-cb">
+                            <span class="icon-crown">👑</span>
+                            ♠️
+                        </div>
+                    </div>
+                    <h2 class="card-title">কল ব্রিজ</h2>
+                    <div class="card-subtitle" id="activePlayersCB">👥 ...</div>
+                    <div class="card-btn blue-text">খেলুন ➔</div>
                 </div>
             </div>
 
             <div class="bottom-nav">
-                <div class="nav-item active">
+                <div class="nav-item active" onclick="showScreen('dashboard-home')">
                     <div class="nav-icon">🏠</div>
                     <div class="nav-label">হোম</div>
                 </div>
@@ -126,804 +208,10 @@
             </div>
         </div>
 
-        <!-- 3. ONLINE MATCH -->
-        <div class="screen" id="online">
-            <div class="screen-header">
-                <div class="back-btn" onclick="App.leaveLobby()">←</div>
-                <h2>অনলাইন খেলুন</h2>
-            </div>
-            <div class="screen-content">
-                <div class="match-cards">
-                    <div class="match-card" onclick="App.startGame('bot', 'medium')">
-                        <div class="mc-icon">⚡</div>
-                        <div class="mc-info">
-                            <div class="mc-title">কুইক ম্যাচ</div>
-                            <div class="mc-desc">দ্রুত ম্যাচ খেলুন</div>
-                        </div>
-                        <div class="mc-arrow">›</div>
-                    </div>
-                    <div class="match-card" onclick="App.startMatchmaking('online', 'hard')">
-                        <div class="mc-icon">🏆</div>
-                        <div class="mc-info">
-                            <div class="mc-title">র‍্যাঙ্কড ম্যাচ</div>
-                            <div class="mc-desc">র‍্যাঙ্ক বাড়ান ও পুরস্কার জিতুন</div>
-                        </div>
-                        <div class="mc-arrow">›</div>
-                    </div>
-                    <div class="match-card" onclick="App.startMatchmaking('online', 'medium')">
-                        <div class="mc-icon">🃏</div>
-                        <div class="mc-info">
-                            <div class="mc-title">ক্লাসিক ম্যাচ</div>
-                            <div class="mc-desc">পরিচিত ক্লাসিক ২৯ নিয়মে</div>
-                        </div>
-                        <div class="mc-arrow">›</div>
-                    </div>
-                    <div class="match-card" onclick="App.startMatchmaking('online', 'hard')">
-                        <div class="mc-icon">👑</div>
-                        <div class="mc-info">
-                            <div class="mc-title">টুর্নামেন্ট</div>
-                            <div class="mc-desc">বড় পুরস্কারের জন্য প্রতিযোগিতা</div>
-                        </div>
-                        <div class="mc-arrow">›</div>
-                    </div>
-                    <div class="match-card" onclick="App.startMatchmaking('online', 'medium')">
-                        <div class="mc-icon">👥</div>
-                        <div class="mc-info">
-                            <div class="mc-title">বন্ধুদের সাথে খেলুন</div>
-                            <div class="mc-desc">লবি তৈরি করে বন্ধুদের আমন্ত্রণ জানান</div>
-                        </div>
-                        <div class="mc-arrow">›</div>
-                    </div>
-                </div>
-
-                <div class="matchmaking-panel online-lobby-panel" style="display:none; text-align: left;">
-                    <div class="section-title" style="padding:0 16px; margin-top:16px;">লবি (Lobby)</div>
-                    <div class="friend-list" id="onlineLobbySlots">
-                        <div class="friend-item">
-                            <div class="fi-avatar">😎<div class="online-dot"></div>
-                            </div>
-                            <div class="fi-info">
-                                <div class="fi-name">আপনি (Host)</div>
-                                <div class="fi-status">সংযুক্ত</div>
-                            </div>
-                        </div>
-                        <div class="friend-item empty-slot">
-                            <div class="fi-avatar" style="background: rgba(255,255,255,0.1)">?</div>
-                            <div class="fi-info">
-                                <div class="fi-name" style="color: var(--text-muted)">অপেক্ষায়...</div>
-                            </div>
-                        </div>
-                        <div class="friend-item empty-slot">
-                            <div class="fi-avatar" style="background: rgba(255,255,255,0.1)">?</div>
-                            <div class="fi-info">
-                                <div class="fi-name" style="color: var(--text-muted)">অপেক্ষায়...</div>
-                            </div>
-                        </div>
-                        <div class="friend-item empty-slot">
-                            <div class="fi-avatar" style="background: rgba(255,255,255,0.1)">?</div>
-                            <div class="fi-info">
-                                <div class="fi-name" style="color: var(--text-muted)">অপেক্ষায়...</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section-title" style="padding:0 16px; margin-top:24px;">অনলাইন বন্ধুরা</div>
-                    <div class="friend-list" id="dynamicOnlineUsersList">
-                        <!-- Real-time users will be rendered here via Firebase -->
-                    </div>
-
-                    <div class="btn-container" style="margin-top: 24px;">
-                        <button id="startOnlineMatchBtn" class="btn-gold btn-full"
-                            onclick="App.startLobbyGame('online', 'medium')" disabled style="opacity: 0.5;">গেম শুরু
-                            করুন</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. CREATE ROOM -->
-        <div class="screen" id="createRoom">
-            <div class="screen-header">
-                <div class="back-btn" onclick="showScreen('home')">←</div>
-                <h2>রুম তৈরি করুন</h2>
-            </div>
-            <div class="screen-content">
-                <div class="room-type-selector">
-                    <div class="room-type-card active">
-                        <div class="rt-icon">🔒</div>
-                        <div class="rt-label">প্রাইভেট রুম</div>
-                    </div>
-                    <div class="room-type-card">
-                        <div class="rt-icon">🌍</div>
-                        <div class="rt-label">পাবলিক রুম</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">রুমের নাম</label>
-                    <input class="form-input" type="text" placeholder="আপনার রুমের নাম দিন..." value="তারেকের রুম">
-                </div>
-
-                <div class="section-title" style="padding:0 16px;margin-bottom:8px">📋 রুম কোড</div>
-                <div class="room-code-display">
-                    <div class="room-code-box">A7X2K9</div>
-                    <div class="copy-btn">📋</div>
-                </div>
-
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">রাউন্ড সংখ্যা</label>
-                    <div class="pill-selector">
-                        <div class="pill active">Best of 3</div>
-                        <div class="pill">Best of 5</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">টার্গেট পয়েন্ট</label>
-                    <div class="pill-selector">
-                        <div class="pill">১৬</div>
-                        <div class="pill active">২৯</div>
-                        <div class="pill">৩২</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">এন্ট্রি কয়েন</label>
-                    <input class="form-input" type="text" placeholder="কয়েন পরিমাণ" value="🪙 100">
-                </div>
-
-                <div class="btn-container">
-                    <button class="btn-gold btn-full" onclick="showScreen('friendInvite')">📩 বন্ধু আমন্ত্রণ
-                        করুন</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. JOIN ROOM -->
-        <div class="screen" id="joinRoom">
-            <div class="screen-header">
-                <div class="back-btn" onclick="showScreen('home')">←</div>
-                <h2>রুমে জয়েন করুন</h2>
-            </div>
-            <div class="screen-content">
-                <div class="form-group">
-                    <label class="form-label">রুম কোড দিন</label>
-                </div>
-                <div class="code-input-group">
-                    <input class="code-digit" maxlength="1" value="A">
-                    <input class="code-digit" maxlength="1" value="7">
-                    <input class="code-digit" maxlength="1" value="X">
-                    <input class="code-digit" maxlength="1" value="2">
-                    <input class="code-digit" maxlength="1" value="K">
-                    <input class="code-digit" maxlength="1" value="9">
-                </div>
-                <div class="btn-container">
-                    <button class="btn-gold btn-full" onclick="showScreen('gameplay')">জয়েন করুন</button>
-                </div>
-
-                <div class="recent-rooms">
-                    <div class="section-title">🕐 সাম্প্রতিক রুমগুলো</div>
-                    <div class="room-list-item">
-                        <div class="rli-icon">🃏</div>
-                        <div class="rli-info">
-                            <div class="rli-name">রাকিবের রুম</div>
-                            <div class="rli-detail">কোড: B3Y5M1 • ৫ মিনিট আগে</div>
-                        </div>
-                        <div class="rli-players">2/4</div>
-                    </div>
-                    <div class="room-list-item">
-                        <div class="rli-icon">🃏</div>
-                        <div class="rli-info">
-                            <div class="rli-name">সুমনের রুম</div>
-                            <div class="rli-detail">কোড: K8P2Q7 • ১ ঘণ্টা আগে</div>
-                        </div>
-                        <div class="rli-players">3/4</div>
-                    </div>
-                    <div class="room-list-item">
-                        <div class="rli-icon">🃏</div>
-                        <div class="rli-info">
-                            <div class="rli-name">ফারহানের রুম</div>
-                            <div class="rli-detail">কোড: D5N8L3 • ২ ঘণ্টা আগে</div>
-                        </div>
-                        <div class="rli-players">1/4</div>
-                    </div>
-
-                    <div class="section-title" style="margin-top:20px">👥 বন্ধুদের রুম</div>
-                    <div class="room-list-item">
-                        <div class="rli-icon">👤</div>
-                        <div class="rli-info">
-                            <div class="rli-name">আরিফের রুম</div>
-                            <div class="rli-detail">🟢 চলমান • কোড: M4R7W2</div>
-                        </div>
-                        <div class="rli-players" style="color:var(--gold-primary)">জয়েন</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 6. FRIEND INVITE -->
-        <div class="screen" id="friendInvite">
-            <div class="screen-header">
-                <div class="back-btn" onclick="showScreen('createRoom')">←</div>
-                <h2>বন্ধু আমন্ত্রণ</h2>
-            </div>
-            <div class="screen-content">
-                <div class="section-title" style="padding:0 16px">📤 শেয়ার করুন</div>
-                <div class="share-buttons">
-                    <div class="share-btn">
-                        <div class="sb-icon">💬</div>
-                        <div class="sb-label">WhatsApp</div>
-                    </div>
-                    <div class="share-btn">
-                        <div class="sb-icon">📱</div>
-                        <div class="sb-label">Messenger</div>
-                    </div>
-                    <div class="share-btn">
-                        <div class="sb-icon">🔗</div>
-                        <div class="sb-label">লিংক কপি</div>
-                    </div>
-                    <div class="share-btn">
-                        <div class="sb-icon">📤</div>
-                        <div class="sb-label">শেয়ার</div>
-                    </div>
-                </div>
-
-                <div class="section-title" style="padding:0 16px">🟢 অনলাইন বন্ধুরা</div>
-                <div class="friend-list">
-                    <div class="friend-item">
-                        <div class="fi-avatar">😎<div class="online-dot"></div>
-                        </div>
-                        <div class="fi-info">
-                            <div class="fi-name">রাকিব হাসান</div>
-                            <div class="fi-status">অনলাইন</div>
-                        </div>
-                        <button class="fi-invite-btn">আমন্ত্রণ</button>
-                    </div>
-                    <div class="friend-item">
-                        <div class="fi-avatar">🧑<div class="online-dot"></div>
-                        </div>
-                        <div class="fi-info">
-                            <div class="fi-name">সুমন আহমেদ</div>
-                            <div class="fi-status">অনলাইন</div>
-                        </div>
-                        <button class="fi-invite-btn">আমন্ত্রণ</button>
-                    </div>
-                    <div class="friend-item">
-                        <div class="fi-avatar">😊<div class="online-dot"></div>
-                        </div>
-                        <div class="fi-info">
-                            <div class="fi-name">ফারহান খান</div>
-                            <div class="fi-status">অনলাইন</div>
-                        </div>
-                        <button class="fi-invite-btn">আমন্ত্রণ</button>
-                    </div>
-                    <div class="friend-item">
-                        <div class="fi-avatar">🤓<div class="online-dot"></div>
-                        </div>
-                        <div class="fi-info">
-                            <div class="fi-name">আরিফ হোসেন</div>
-                            <div class="fi-status">অনলাইন</div>
-                        </div>
-                        <button class="fi-invite-btn">আমন্ত্রণ</button>
-                    </div>
-                    <div class="friend-item">
-                        <div class="fi-avatar">🙂</div>
-                        <div class="fi-info">
-                            <div class="fi-name">কামাল মিয়া</div>
-                            <div class="fi-status" style="color:var(--text-muted)">অফলাইন • ২ ঘণ্টা আগে</div>
-                        </div>
-                        <button class="fi-invite-btn" style="opacity:0.4">আমন্ত্রণ</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 7. BOT MODE -->
-        <div class="screen" id="botMode">
-            <div class="screen-header">
-                <div class="back-btn" onclick="showScreen('home')">←</div>
-                <h2>বটের সাথে খেলুন</h2>
-            </div>
-            <div class="screen-content">
-                <div class="bot-avatar-section">
-                    <div class="bot-avatar">🤖</div>
-                    <div class="bot-name">AI বট</div>
-                    <div class="bot-desc">কঠিনতা নির্বাচন করুন</div>
-                </div>
-
-                <div class="section-title" style="padding:0 16px">🎯 কঠিনতার মাত্রা</div>
-                <div class="difficulty-grid">
-                    <div class="diff-card">
-                        <div class="diff-emoji">😊</div>
-                        <div class="diff-label">সহজ</div>
-                        <div class="diff-stars">⭐</div>
-                    </div>
-                    <div class="diff-card active">
-                        <div class="diff-emoji">🤔</div>
-                        <div class="diff-label">মাঝারি</div>
-                        <div class="diff-stars">⭐⭐</div>
-                    </div>
-                    <div class="diff-card">
-                        <div class="diff-emoji">😈</div>
-                        <div class="diff-label">কঠিন</div>
-                        <div class="diff-stars">⭐⭐⭐</div>
-                    </div>
-                    <div class="diff-card">
-                        <div class="diff-emoji">🧠</div>
-                        <div class="diff-label">এক্সপার্ট</div>
-                        <div class="diff-stars">⭐⭐⭐⭐</div>
-                    </div>
-                </div>
-
-                <div class="btn-container">
-                    <button class="btn-gold btn-full" onclick="showScreen('gameplay')">🎮 খেলা শুরু করুন</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 8. LOCAL MULTIPLAYER -->
-        <div class="screen" id="localMulti">
-            <div class="screen-header">
-                <div class="back-btn" onclick="showScreen('home')">←</div>
-                <h2>ল্যান মাল্টিপ্লেয়ার</h2>
-            </div>
-            <div class="screen-content">
-                <div class="local-modes">
-                    <div class="local-mode-card" onclick="showScreen('createRoom')">
-                        <div class="lm-icon">🏠</div>
-                        <div class="lm-info">
-                            <div class="lm-title">রুম তৈরি করুন</div>
-                            <div class="lm-desc">নতুন ওয়াইফাই রুম হোস্ট করুন</div>
-                        </div>
-                    </div>
-                    <div class="local-mode-card" onclick="showScreen('joinRoom')">
-                        <div class="lm-icon">🔍</div>
-                        <div class="lm-info">
-                            <div class="lm-title">রুমে যুক্ত হোন</div>
-                            <div class="lm-desc">বন্ধুর তৈরি করা রুমে যুক্ত হোন</div>
-                        </div>
-                    </div>
-                    <div class="local-mode-card" onclick="showScreen('bluetoothLobby')">
-                        <div class="lm-icon">📶</div>
-                        <div class="lm-info">
-                            <div class="lm-title">ব্লুটুথ খেলুন</div>
-                            <div class="lm-desc">ব্লুটুথের মাধ্যমে অফলাইনে খেলুন</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="matchmaking-panel">
-                    <div class="matchmaking-spinner"></div>
-                    <div class="mm-text">ডিভাইস স্ক্যান করা হচ্ছে...</div>
-                    <div class="mm-time">আনুমানিক সময়: ৩ সেকেন্ড</div>
-                </div>
-
-                <div style="padding:16px;text-align:center;margin-top:20px">
-                    <div style="font-size:48px;margin-bottom:12px">📶</div>
-                    <div style="font-size:14px;color:var(--text-secondary)">আপনার বন্ধুদের সাথে ওয়াইফাই বা ব্লুটুথ
-                        দিয়ে অফলাইনে খেলুন!</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 8.5 BLUETOOTH LOBBY -->
-        <div class="screen" id="bluetoothLobby">
-            <div class="screen-header">
-                <div class="back-btn" onclick="showScreen('localMulti')">←</div>
-                <h2>ব্লুটুথ লবি</h2>
-            </div>
-            <div class="screen-content">
-                <div class="section-title" style="padding:0 16px; margin-top:16px;">প্লেয়ারস (Players)</div>
-                <div class="friend-list" id="bluetoothSlots">
-                    <div class="friend-item">
-                        <div class="fi-avatar">😎<div class="online-dot"></div>
-                        </div>
-                        <div class="fi-info">
-                            <div class="fi-name">আপনি (Host)</div>
-                            <div class="fi-status">সংযুক্ত</div>
-                        </div>
-                    </div>
-                    <div class="friend-item empty-slot">
-                        <div class="fi-avatar" style="background: rgba(255,255,255,0.1)">?</div>
-                        <div class="fi-info">
-                            <div class="fi-name" style="color: var(--text-muted)">অপেক্ষায়...</div>
-                        </div>
-                    </div>
-                    <div class="friend-item empty-slot">
-                        <div class="fi-avatar" style="background: rgba(255,255,255,0.1)">?</div>
-                        <div class="fi-info">
-                            <div class="fi-name" style="color: var(--text-muted)">অপেক্ষায়...</div>
-                        </div>
-                    </div>
-                    <div class="friend-item empty-slot">
-                        <div class="fi-avatar" style="background: rgba(255,255,255,0.1)">?</div>
-                        <div class="fi-info">
-                            <div class="fi-name" style="color: var(--text-muted)">অপেক্ষায়...</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="btn-container" style="margin-top: 24px;">
-                    <button class="btn-glass" onclick="App.startBluetoothMatchmaking('lan', 'medium')"
-                        style="width:100%; margin-bottom: 12px;">
-                        <span style="font-size: 20px; margin-right: 8px;">🔍</span> ডিভাইস স্ক্যান করুন
-                    </button>
-                    <button class="btn-glass" onclick="App.fillLobbyWithBots()"
-                        style="width:100%; margin-bottom: 12px; background: rgba(52, 152, 219, 0.2); border-color: rgba(52, 152, 219, 0.5);">
-                        <span style="font-size: 20px; margin-right: 8px;">🤖</span> বট দিয়ে পূর্ণ করুন
-                    </button>
-                    <button id="startBluetoothBtn" class="btn-gold btn-full"
-                        onclick="App.startLobbyGame('lan', 'medium')" disabled style="opacity: 0.5;">গেম শুরু
-                        করুন</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 9. GAMEPLAY SCREEN -->
-        <div class="screen" id="gameplay">
-            <div class="game-top-bar">
-                <div class="game-action-btn" onclick="App.handlePlayerAction('leave_game')"
-                    style="background: rgba(255,50,50,0.2); border: 1px solid rgba(255,50,50,0.5);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffb3b3" stroke-width="2.5"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M19 12H5M12 19l-7-7 7-7" />
-                    </svg>
-                </div>
-                <div class="game-scores">
-                    <div class="score-chip team-a">আমরা: 12</div>
-                    <div class="score-chip team-b">ওরা: 8</div>
-                </div>
-                <div class="game-actions">
-                    <div class="game-action-btn"
-                        onclick="document.getElementById('quickChatPopup').classList.toggle('show'); document.getElementById('emojiPopup').classList.remove('show');">
-                        💬</div>
-                    <div class="game-action-btn"
-                        onclick="document.getElementById('emojiPopup').classList.toggle('show'); document.getElementById('quickChatPopup').classList.remove('show');">
-                        😀</div>
-                </div>
-            </div>
-
-            <div class="game-table">
-                <div id="quickChatPopup" class="quick-chat-popup">
-                    <div class="chat-header">
-                        <span style="font-size: 11px; color: var(--text-muted);">মেসেজ পাঠান</span>
-                        <div class="chat-close"
-                            onclick="document.getElementById('quickChatPopup').classList.remove('show')">✕</div>
-                    </div>
-                    <div class="chat-option" onclick="App.sendChat('তাড়াতাড়ি খেলুন!')">তাড়াতাড়ি খেলুন!</div>
-                    <div class="chat-option" onclick="App.sendChat('দারুণ চাল!')">দারুণ চাল!</div>
-                    <div class="chat-option" onclick="App.sendChat('ট্রাম্পটা আমার ছিল!')">ট্রাম্পটা আমার ছিল!</div>
-                    <div class="chat-option" onclick="App.sendChat('ভাগ্যটাই খারাপ!')">ভাগ্যটাই খারাপ!</div>
-                    <div class="chat-option" onclick="App.sendChat('সাবধানে খেলুন!')">সাবধানে খেলুন!</div>
-                </div>
-
-                <div id="emojiPopup" class="quick-chat-popup emoji-popup">
-                    <div class="chat-header">
-                        <span style="font-size: 11px; color: var(--text-muted);">ইমোজি পাঠান</span>
-                        <div class="chat-close"
-                            onclick="document.getElementById('emojiPopup').classList.remove('show')">✕</div>
-                    </div>
-                    <div class="emoji-grid">
-                        <div class="emoji-option"
-                            onclick="App.sendChat('😀'); document.getElementById('emojiPopup').classList.remove('show');">
-                            😀</div>
-                        <div class="emoji-option"
-                            onclick="App.sendChat('😂'); document.getElementById('emojiPopup').classList.remove('show');">
-                            😂</div>
-                        <div class="emoji-option"
-                            onclick="App.sendChat('😍'); document.getElementById('emojiPopup').classList.remove('show');">
-                            😍</div>
-                        <div class="emoji-option"
-                            onclick="App.sendChat('😎'); document.getElementById('emojiPopup').classList.remove('show');">
-                            😎</div>
-                        <div class="emoji-option"
-                            onclick="App.sendChat('😢'); document.getElementById('emojiPopup').classList.remove('show');">
-                            😢</div>
-                        <div class="emoji-option"
-                            onclick="App.sendChat('😡'); document.getElementById('emojiPopup').classList.remove('show');">
-                            😡</div>
-                        <div class="emoji-option"
-                            onclick="App.sendChat('👏'); document.getElementById('emojiPopup').classList.remove('show');">
-                            👏</div>
-                        <div class="emoji-option"
-                            onclick="App.sendChat('👍'); document.getElementById('emojiPopup').classList.remove('show');">
-                            👍</div>
-                        <div class="emoji-option"
-                            onclick="App.sendChat('👎'); document.getElementById('emojiPopup').classList.remove('show');">
-                            👎</div>
-                        <div class="emoji-option"
-                            onclick="App.sendChat('💔'); document.getElementById('emojiPopup').classList.remove('show');">
-                            💔</div>
-                    </div>
-                </div>
-
-                <div class="bid-panel">
-                    <div class="bid-label">বিড</div>
-                    <div class="bid-value">17</div>
-                </div>
-
-                <div class="table-felt">
-                    <!-- Top player -->
-                    <div class="player-seat top">
-                        <div class="player-avatar-game">😠</div>
-                        <div class="player-name-game">প্রতিপক্ষ ১</div>
-                    </div>
-                    <!-- Left player -->
-                    <div class="player-seat left">
-                        <div class="player-avatar-game" style="border-color: #2ecc71;">
-                            😎
-                            <div class="dealer-badge">D</div>
-                        </div>
-                        <div class="player-name-game">পার্টনার</div>
-                    </div>
-                    <!-- Right player -->
-                    <div class="player-seat right">
-                        <div class="player-avatar-game">🤨</div>
-                        <div class="player-name-game">প্রতিপক্ষ ২</div>
-                    </div>
-                    <!-- Bottom player (You) -->
-                    <div class="player-seat bottom">
-                        <div class="player-avatar-game active-turn">
-                            👤
-                            <div class="timer-ring"></div>
-                        </div>
-                        <div class="player-name-game" style="color:var(--gold-light)">আপনি</div>
-                    </div>
-
-                    <!-- Trick area -->
-                    <div class="trick-area">
-                        <div class="trick-card">♥️</div>
-                        <div class="trick-card">♠</div>
-                        <div class="trick-card">♦️</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player's hand -->
-            <div class="player-hand">
-                <div class="hand-card red"><span class="hc-rank">J</span><span class="hc-suit">♥</span></div>
-                <div class="hand-card black"><span class="hc-rank">9</span><span class="hc-suit">♠</span></div>
-                <div class="hand-card red"><span class="hc-rank">A</span><span class="hc-suit">♦</span></div>
-                <div class="hand-card black"><span class="hc-rank">10</span><span class="hc-suit">♣</span></div>
-                <div class="hand-card red"><span class="hc-rank">K</span><span class="hc-suit">♥</span></div>
-                <div class="hand-card black"><span class="hc-rank">Q</span><span class="hc-suit">♠</span></div>
-                <div class="hand-card red"><span class="hc-rank">J</span><span class="hc-suit">♦</span></div>
-                <div class="hand-card black"><span class="hc-rank">9</span><span class="hc-suit">♣</span></div>
-            </div>
-
-            <div class="game-bottom-bar">
-                <button class="game-btn secondary">পাস</button>
-                <button class="game-btn primary">🃏 কার্ড দিন</button>
-                <button class="game-btn secondary">ট্রাম্প দেখান</button>
-            </div>
-        </div>
-
-        <!-- 10. MATCH RESULT -->
-        <div class="screen" id="result">
-            <div class="particles">
-                <div class="particle" style="left:15%;animation-delay:0.2s"></div>
-                <div class="particle" style="left:35%;animation-delay:0.8s"></div>
-                <div class="particle" style="left:55%;animation-delay:0.4s"></div>
-                <div class="particle" style="left:75%;animation-delay:1.2s"></div>
-                <div class="particle" style="left:25%;animation-delay:1.6s"></div>
-                <div class="particle" style="left:85%;animation-delay:0.6s"></div>
-            </div>
-            <div class="result-trophy">🏆</div>
-            <div class="result-title">বিজয়ী!</div>
-            <div class="result-score">স্কোর: 0 - 0</div>
-
-            <div class="result-rewards">
-                <div class="reward-item">
-                    <div class="reward-icon">🪙</div>
-                    <div class="reward-value">+250</div>
-                    <div class="reward-label">কয়েন</div>
-                </div>
-                <div class="reward-item">
-                    <div class="reward-icon">⭐</div>
-                    <div class="reward-value">+120</div>
-                    <div class="reward-label">XP</div>
-                </div>
-                <div class="reward-item">
-                    <div class="reward-icon">📈</div>
-                    <div class="reward-value">+15</div>
-                    <div class="reward-label">র‍্যাঙ্ক</div>
-                </div>
-            </div>
-
-            <div class="result-rank-change">
-                ▲ গোল্ড III → গোল্ড II
-            </div>
-
-            <div class="result-actions">
-                <button class="btn-gold btn-full" onclick="showScreen('gameplay')">🔄 আবার খেলুন</button>
-                <button class="btn-outline btn-full">📤 রেজাল্ট শেয়ার করুন</button>
-                <button class="btn-outline btn-full" onclick="showScreen('home')">🏠 হোমে যান</button>
-            </div>
-        </div>
-
-        <!-- 11. PROFILE -->
-        <div class="screen" id="profile">
-            <div class="profile-header">
-                <div class="profile-avatar">
-                    👤
-                    <div class="profile-level">Lv.25</div>
-                </div>
-                <div class="profile-name">লোড হচ্ছে...</div>
-                <div class="profile-id">ID: ...</div>
-                <div class="profile-phone" style="font-size: 14px; color: var(--gold-light); margin-bottom: 8px;"></div>
-                <div class="xp-bar">
-                    <div class="xp-fill"></div>
-                </div>
-                <div class="xp-label">6,800 / 10,000 XP</div>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">68%</div>
-                    <div class="stat-label">জয়ের হার</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">542</div>
-                    <div class="stat-label">মোট গেম</div>
-                </div>
-            </div>
-
-            <div class="achievements-section">
-                <div class="section-title">🏅 অর্জনসমূহ</div>
-                <div class="achievement-row">
-                    <div class="achievement-badge">🥇</div>
-                    <div class="achievement-badge">🎯</div>
-                    <div class="achievement-badge">🔥</div>
-                    <div class="achievement-badge">💎</div>
-                    <div class="achievement-badge">⚡</div>
-                    <div class="achievement-badge locked">🌟</div>
-                    <div class="achievement-badge locked">👑</div>
-                </div>
-            </div>
-
-            <div class="match-history">
-                <div class="section-title">📊 ম্যাচ ইতিহাস</div>
-                <div id="matchHistoryContainer">
-                    <!-- History injected by JS -->
-                </div>
-            </div>
-
-            <div style="padding: 16px; margin-bottom: 70px;">
-                <button id="unsub-btn" class="btn-danger" onclick="App.unsubscribe()">🚪 আনসাবস্ক্রাইব</button>
-            </div>
-
-            <div class="bottom-nav">
-                <div class="nav-item" onclick="showScreen('home')">
-                    <div class="nav-icon">🏠</div>
-                    <div class="nav-label">হোম</div>
-                </div>
-                <div class="nav-item" onclick="showScreen('leaderboard')">
-                    <div class="nav-icon">🏆</div>
-                    <div class="nav-label">লিডারবোর্ড</div>
-                </div>
-                <div class="nav-item active">
-                    <div class="nav-icon">👤</div>
-                    <div class="nav-label">প্রোফাইল</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 12. LEADERBOARD -->
-        <div class="screen" id="leaderboard">
-            <div class="screen-header">
-                <div class="back-btn" onclick="showScreen('home')">←</div>
-                <h2>লিডারবোর্ড</h2>
-            </div>
-            <div class="screen-content">
-                <div class="leaderboard-tabs" style="grid-template-columns: 1fr 1fr;">
-                    <button class="lb-tab active">সর্বোচ্চ জয়</button>
-                    <button class="lb-tab">সাপ্তাহিক জয়</button>
-                </div>
-
-                <div class="lb-top-three">
-                    <!-- Dynamic top 3 will be rendered here -->
-                </div>
-
-                <div class="lb-list">
-                    <!-- Dynamic list will be rendered here -->
-                </div>
-            </div>
-
-            <div class="bottom-nav">
-                <div class="nav-item" onclick="showScreen('home')">
-                    <div class="nav-icon">🏠</div>
-                    <div class="nav-label">হোম</div>
-                </div>
-                <div class="nav-item active">
-                    <div class="nav-icon">🏆</div>
-                    <div class="nav-label">লিডারবোর্ড</div>
-                </div>
-                <div class="nav-item" onclick="showScreen('profile')">
-                    <div class="nav-icon">👤</div>
-                    <div class="nav-label">প্রোফাইল</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 13. STORE -->
-        <div class="screen" id="store">
-            <div class="screen-header">
-                <div class="back-btn" onclick="showScreen('home')">←</div>
-                <h2>দোকান</h2>
-                <div class="coins" style="font-size:12px;padding:4px 10px">
-                    <span>🪙</span><span>5,250</span>
-                </div>
-            </div>
-            <div class="screen-content">
-                <div class="store-tabs">
-                    <div class="store-tab active">🪙 কয়েন</div>
-                    <div class="store-tab">💎 প্রিমিয়াম</div>
-                    <div class="store-tab">👤 অবতার</div>
-                    <div class="store-tab">🃏 কার্ড স্কিন</div>
-                    <div class="store-tab">🎨 টেবিল</div>
-                    <div class="store-tab">😀 ইমোজি</div>
-                </div>
-
-                <div class="store-featured">
-                    <div class="sf-tag">✨ সেরা মূল্য</div>
-                    <div class="sf-title">প্রিমিয়াম পাস</div>
-                    <div class="sf-desc">এক্সক্লুসিভ পুরস্কার ও সুবিধা আনলক করুন</div>
-                    <div class="sf-price">৳ ২৯৯/মাস</div>
-                </div>
-
-                <div class="section-title" style="padding:0 16px;margin-top:16px">🪙 কয়েন প্যাক</div>
-                <div class="store-grid">
-                    <div class="store-item">
-                        <div class="si-icon">🪙</div>
-                        <div class="si-name">৫০০ কয়েন</div>
-                        <div class="si-desc">ছোট প্যাক</div>
-                        <div class="si-price">৳ ৪৯</div>
-                    </div>
-                    <div class="store-item">
-                        <div class="si-icon">💰</div>
-                        <div class="si-name">২,০০০ কয়েন</div>
-                        <div class="si-desc">মিডিয়াম প্যাক</div>
-                        <div class="si-price">৳ ১৪৯</div>
-                    </div>
-                    <div class="store-item">
-                        <div class="si-icon">🏆</div>
-                        <div class="si-name">৫,০০০ কয়েন</div>
-                        <div class="si-desc">বড় প্যাক</div>
-                        <div class="si-price">৳ ২৯৯</div>
-                    </div>
-                    <div class="store-item" style="border-color:var(--border-gold)">
-                        <div class="si-icon">👑</div>
-                        <div class="si-name">১০,০০০ কয়েন</div>
-                        <div class="si-desc">মেগা প্যাক 🔥</div>
-                        <div class="si-price">৳ ৪৯৯</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bottom-nav">
-                <div class="nav-item" onclick="showScreen('home')">
-                    <div class="nav-icon">🏠</div>
-                    <div class="nav-label">হোম</div>
-                </div>
-                <div class="nav-item" onclick="showScreen('leaderboard')">
-                    <div class="nav-icon">🏆</div>
-                    <div class="nav-label">লিডারবোর্ড</div>
-                </div>
-                <div class="nav-item" onclick="showScreen('profile')">
-                    <div class="nav-icon">👤</div>
-                    <div class="nav-label">প্রোফাইল</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 14. SETTINGS -->
+        <!-- SETTINGS -->
         <div class="screen" id="settings">
             <div class="screen-header">
-                <div class="back-btn" onclick="showScreen('home')">←</div>
+                <div class="back-btn" onclick="showScreen('dashboard-home')">←</div>
                 <h2>সেটিংস</h2>
             </div>
             <div class="screen-content">
@@ -994,168 +282,386 @@
                     </div>
                 </div>
 
-                <button class="btn-danger" id="unsub-btn" onclick="App.unsubscribe()">🚪 আনসাবস্ক্রাইব</button>
+                <button class="btn-danger" id="unsub-btn" onclick="logout()">🚪 লগআউট</button>
 
                 <div style="text-align:center;padding:16px;color:var(--text-muted);font-size:11px">
-                    ২৯ কার্ড গেম v1.0.0<br>
+                    গেম পোর্টাল v1.0.0<br>
                     © ২০২৬ সর্বস্বত্ব সংরক্ষিত
                 </div>
             </div>
         </div>
-
-        <!-- 15. HOW TO PLAY -->
-        <div class="screen" id="howToPlay">
-            <div class="screen-header">
-                <div class="back-btn" onclick="showScreen('home')">←</div>
-                <h2>কিভাবে খেলবেন</h2>
+        <!-- PROFILE SCREEN -->
+        <div class="screen" id="profile">
+            <div class="profile-header">
+                <div class="profile-avatar" id="portalProfileAvatar">
+                    👤
+                    <div class="profile-level" id="portalProfileLevelBadge">Lv.25</div>
+                </div>
+                <div class="profile-name" id="portalProfileName">লোড হচ্ছে...</div>
+                <div class="profile-id">ID: <span id="portalProfileId">...</span></div>
+                <div class="profile-phone" id="portalProfilePhone" style="font-size: 14px; color: var(--gold-light); margin-bottom: 8px;"></div>
+                <div class="xp-bar">
+                    <div class="xp-fill" id="portalProfileXpFill"></div>
+                </div>
+                <div class="xp-label" id="portalProfileXpLabel">0 / 100 XP</div>
             </div>
-            <div class="screen-content">
-                <div class="tutorial-cards">
-                    <div class="tutorial-card">
-                        <div class="tc-step">1</div>
-                        <div class="tc-title">🃏 কার্ড বিতরণ</div>
-                        <div class="tc-desc">চারজন খেলোয়াড় দুটি দলে ভাগ হয়ে খেলে। প্রতিটি খেলোয়াড়কে ৮টি করে কার্ড
-                            দেওয়া হয় (৩২ কার্ডের ডেক থেকে)। প্রথমে ৪টি কার্ড দেওয়া হয়, বিড এর পর বাকি ৪টি।</div>
-                        <div class="tc-visual">🃏🃏🃏🃏</div>
-                    </div>
-                    <div class="tutorial-card">
-                        <div class="tc-step">2</div>
-                        <div class="tc-title">📢 বিডিং</div>
-                        <div class="tc-desc">প্রথম ৪টি কার্ড পাওয়ার পর খেলোয়াড়রা বিড করেন। সর্বনিম্ন বিড ১৫ এবং
-                            সর্বোচ্চ ২৮। যে দল সবচেয়ে বেশি বিড করবে, তারা ট্রাম্প নির্ধারণ করবে।</div>
-                    </div>
-                    <div class="tutorial-card">
-                        <div class="tc-step">3</div>
-                        <div class="tc-title">♥️ ট্রাম্প সুট</div>
-                        <div class="tc-desc">বিড বিজয়ী গোপনে ট্রাম্প সুট নির্ধারণ করেন। ট্রাম্প সুটের কার্ড অন্য সব
-                            কার্ডকে হারাতে পারে। প্রয়োজন হলে ট্রাম্প প্রকাশ করা হয়।</div>
-                        <div class="tc-visual">♠ ♥ ♦ ♣</div>
-                    </div>
-                    <div class="tutorial-card">
-                        <div class="tc-step">4</div>
-                        <div class="tc-title">🎯 পয়েন্ট গণনা</div>
-                        <div class="tc-desc">
-                            জ্যাক (J) = ৩ পয়েন্ট<br>
-                            নাইন (9) = ২ পয়েন্ট<br>
-                            এস (A) = ১ পয়েন্ট<br>
-                            দশ (10) = ১ পয়েন্ট<br>
-                            মোট = ২৮ পয়েন্ট + শেষ ট্রিক = ১ = ২৯
-                        </div>
-                    </div>
-                    <div class="tutorial-card">
-                        <div class="tc-step">5</div>
-                        <div class="tc-title">🏆 জয়ের শর্ত</div>
-                        <div class="tc-desc">বিড দল তাদের বিডের সমান বা বেশি পয়েন্ট পেলে জেতে। না পারলে প্রতিপক্ষ দল
-                            জেতে। লক্ষ্য হলো ট্রিক জিতে পয়েন্ট সংগ্রহ করা!</div>
-                    </div>
+
+            <div class="stats-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                <div class="stat-card">
+                    <div class="stat-value" id="portalProfileTotalGames">0</div>
+                    <div class="stat-label">মোট গেম</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="portalProfileWins" style="color: #2ecc71;">0</div>
+                    <div class="stat-label">জয়</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="portalProfileLosses" style="color: #e74c3c;">0</div>
+                    <div class="stat-label">পরাজয়</div>
+                </div>
+            </div>
+
+            <div class="achievements-section">
+                <div class="section-title">🏅 অর্জনসমূহ</div>
+                <div class="achievement-row">
+                    <div class="achievement-badge">🥇</div>
+                    <div class="achievement-badge">🎯</div>
+                    <div class="achievement-badge">🔥</div>
+                    <div class="achievement-badge">💎</div>
+                    <div class="achievement-badge">⚡</div>
+                    <div class="achievement-badge locked">🌟</div>
+                    <div class="achievement-badge locked">👑</div>
+                </div>
+            </div>
+
+            <div style="padding: 16px; margin-bottom: 70px;">
+                <button id="unsub-btn" class="btn-danger" onclick="logout()">🚪 লগআউট</button>
+            </div>
+
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('dashboard-home')">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-label">হোম</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('leaderboard')">
+                    <div class="nav-icon">🏆</div>
+                    <div class="nav-label">লিডারবোর্ড</div>
+                </div>
+                <div class="nav-item active">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-label">প্রোফাইল</div>
                 </div>
             </div>
         </div>
 
-    </div>
-
-    <script>
-        // Room type selector
-        document.querySelectorAll('.room-type-card').forEach(card => {
-            card.addEventListener('click', function () {
-                document.querySelectorAll('.room-type-card').forEach(c => c.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // Pill selector
-        document.querySelectorAll('.pill-selector').forEach(selector => {
-            selector.querySelectorAll('.pill').forEach(pill => {
-                pill.addEventListener('click', function () {
-                    this.parentElement.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-        });
-
-        // Difficulty selector
-        document.querySelectorAll('.diff-card').forEach(card => {
-            card.addEventListener('click', function () {
-                document.querySelectorAll('.diff-card').forEach(c => c.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // Leaderboard tabs
-        document.querySelectorAll('.lb-tab').forEach(tab => {
-            tab.addEventListener('click', function () {
-                document.querySelectorAll('.lb-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // Store tabs
-        document.querySelectorAll('.store-tab').forEach(tab => {
-            tab.addEventListener('click', function () {
-                document.querySelectorAll('.store-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // Card hover sound effect (visual only for now)
-        document.querySelectorAll('.hand-card').forEach(card => {
-            card.addEventListener('click', function () {
-                this.style.transform = 'translateY(-30px) scale(1.1)';
-                this.style.boxShadow = '0 12px 30px rgba(212, 168, 67, 0.4)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                    this.style.boxShadow = '';
-                }, 300);
-            });
-        });
-
-        // Auto navigate from splash to home after 3 seconds
-        setTimeout(() => {
-            // Optional: auto-navigate
-            // showScreen('home');
-        }, 3000);
-    </script>
-
-    <!-- Custom Modal -->
-    <div class="custom-modal-overlay" id="customConfirmModal">
-        <div class="custom-modal">
-            <h3 id="cm-title">নিশ্চিত করুন</h3>
-            <p id="cm-message">আপনি কি নিশ্চিত?</p>
-            <div class="cm-actions">
-                <button class="cm-btn cm-cancel" id="cm-cancel-btn">না </button>
-                <button class="cm-btn cm-confirm" id="cm-confirm-btn">হ্যাঁ </button>
+        <!-- LEADERBOARD SCREEN -->
+        <div class="screen" id="leaderboard">
+            <div class="screen-header">
+                <div class="back-btn" onclick="showScreen('dashboard-home')">←</div>
+                <h2>লিডারবোর্ড</h2>
             </div>
-        </div>
-    </div>
+            <div class="screen-content">
+                <!-- Leaderboard tabs removed -->
 
-    <!-- Incoming Invite Modal -->
-    <div class="custom-modal-overlay" id="incomingInviteModal" style="z-index: 10000; display: none;">
-        <div class="custom-modal" style="text-align: center;">
-            <div style="font-size: 40px; margin-bottom: 10px;" id="ii-avatar">😎</div>
-            <h3 id="ii-title" style="color: var(--gold-primary);">গেমের আমন্ত্রণ!</h3>
-            <p id="ii-message" style="margin-bottom: 20px;"><b>রাকিব</b> আপনাকে গেম খেলার জন্য আমন্ত্রণ জানিয়েছে।</p>
-            <div class="cm-actions">
-                <button class="cm-btn cm-cancel" id="ii-reject-btn"
-                    style="background: rgba(255,0,0,0.1); color: #ff4444; border: 1px solid #ff4444;">বাতিল</button>
-                <button class="cm-btn cm-confirm" id="ii-accept-btn"
-                    style="background: var(--green-primary); color: white;">গ্রহণ করুন</button>
+                <div class="lb-top-three" style="min-height: 150px; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">
+                    ডেটা লোড হচ্ছে...
+                </div>
+
+                <div class="lb-list" style="min-height: 200px; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">
+                    শীঘ্রই আসছে...
+                </div>
             </div>
-        </div>
+
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('dashboard-home')">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-label">হোম</div>
+                </div>
+                <div class="nav-item active">
+                    <div class="nav-icon">🏆</div>
+                    <div class="nav-label">লিডারবোর্ড</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('profile')">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-label">প্রোফাইল</div>
+                </div>
+            </div>
     </div>
 
-    <!-- Scripts -->
-    <!-- Firebase SDK (v8) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="js/firebase-config.js?v=15"></script>
-    <script src="js/network.js?v=15"></script>
-    <script src="js/storage.js?v=15"></script>
-    <script src="js/game-engine.js?v=15"></script>
-    <script src="js/bot-ai.js?v=15"></script>
-    <script src="js/animations.js?v=15"></script>
-    <script src="js/gameplay-ui.js?v=15"></script>
-    <script src="js/ui-renderer.js?v=15"></script>
-    <script src="js/app.js?v=15"></script>
-</body>
+    <script src="js/firebase-config.js"></script>
+    
+    <script>
+        // Check if logged in
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'auth/login.html';
+        }
 
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const screen = urlParams.get('screen');
+            if (screen) {
+                showScreen(screen);
+            }
+        });
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            
+            if (screenId === 'leaderboard') {
+                loadLeaderboard();
+            }
+        }
+
+        // Set user name
+        const profileStr = localStorage.getItem('29card_profile');
+        if (profileStr) {
+            try {
+                const profile = JSON.parse(profileStr);
+                if (profile.name) {
+                    document.getElementById('portalUserName').textContent = profile.name;
+                    document.getElementById('portalAvatar').innerHTML = (profile.avatar || '👤') + '<div class="level-badge" id="portalLevelBadge">...</div>';
+                    
+                    const profNameEl = document.getElementById('portalProfileName');
+                    if (profNameEl) profNameEl.textContent = profile.name;
+                    
+                    const profAvatarEl = document.getElementById('portalProfileAvatar');
+                    if (profAvatarEl) profAvatarEl.innerHTML = (profile.avatar || '👤') + '<div class="profile-level" id="portalProfileLevelBadge">...</div>';
+                    
+                    const profIdEl = document.getElementById('portalProfileId');
+                    if (profIdEl) profIdEl.textContent = profile.id;
+                }
+                const phone = localStorage.getItem('phone') || profile.id;
+                if (phone) {
+                    document.getElementById('portalPlayerLevel').textContent = phone;
+                    
+                    const profPhoneEl = document.getElementById('portalProfilePhone');
+                    if (profPhoneEl) profPhoneEl.textContent = phone;
+                }
+            } catch(e) {}
+        }
+        
+        async function updateUserRankBadge() {
+            try {
+                const snapshot = await firebase.database().ref('users').once('value');
+                const data = snapshot.val();
+                if (!data) return;
+                
+                const users = [];
+                for (const phone in data) {
+                    users.push({
+                        phone: phone,
+                        wins: data[phone].stats?.wins || 0
+                    });
+                }
+                users.sort((a, b) => b.wins - a.wins);
+                
+                const myPhone = localStorage.getItem('phone') || (localStorage.getItem('29card_profile') ? JSON.parse(localStorage.getItem('29card_profile')).id : null);
+                let myRank = users.findIndex(u => u.phone === myPhone) + 1;
+                if (myRank === 0) myRank = users.length + 1;
+                
+                const badge1 = document.getElementById('portalLevelBadge');
+                if (badge1) badge1.textContent = myRank;
+                
+                const badge2 = document.getElementById('portalProfileLevelBadge');
+                if (badge2) badge2.textContent = 'Rank ' + myRank;
+                
+                let wins = 0;
+                let losses = 0;
+                let total = 0;
+                if (data[myPhone] && data[myPhone].stats) {
+                    const stats = data[myPhone].stats;
+                    total = stats.totalGames || 0;
+                    wins = stats.wins || 0;
+                    losses = total > wins ? total - wins : (stats.losses || 0);
+                    
+                    const totalGamesEl = document.getElementById('portalProfileTotalGames');
+                    if (totalGamesEl) totalGamesEl.textContent = total;
+                    
+                    const winsEl = document.getElementById('portalProfileWins');
+                    if (winsEl) winsEl.textContent = wins;
+                    
+                    const lossesEl = document.getElementById('portalProfileLosses');
+                    if (lossesEl) lossesEl.textContent = losses;
+                }
+                
+                // Calculate XP and Level
+                const level = Math.floor(wins / 100) + 1;
+                const nextLevelWins = level * 100;
+                const progressPercent = (wins / nextLevelWins) * 100;
+                
+                const xpFill = document.getElementById('portalProfileXpFill');
+                if (xpFill) xpFill.style.width = progressPercent + '%';
+                
+                const xpLabel = document.getElementById('portalProfileXpLabel');
+                if (xpLabel) xpLabel.textContent = `${wins} / ${nextLevelWins} XP`;
+                
+                const portalPlayerLevel = document.getElementById('portalPlayerLevel');
+                if (portalPlayerLevel) {
+                    const rankName = level < 2 ? 'ব্রোঞ্জ' : level < 4 ? 'সিলভার' : level < 6 ? 'গোল্ড' : 'ডায়মন্ড';
+                    portalPlayerLevel.textContent = `লেভেল ${level} • ${rankName}`;
+                }
+                
+                // Unlock achievements based on wins (0, 100, 200, 300...)
+                const badges = document.querySelectorAll('.achievement-badge');
+                badges.forEach((badge, index) => {
+                    const requiredWins = index * 100;
+                    if (wins >= requiredWins) {
+                        badge.classList.remove('locked');
+                    } else {
+                        badge.classList.add('locked');
+                    }
+                });
+            } catch(e) {
+                console.error(e);
+            }
+        }
+        
+        async function animateActivePlayers() {
+            try {
+                const snapshot = await firebase.database().ref('users').once('value');
+                const data = snapshot.val();
+                let totalUsers = Object.keys(data || {}).length;
+                
+                // Since we don't track separate game presence yet, we split the total users
+                // to give a realistic separate count for both games.
+                let p29Count = Math.ceil(totalUsers * 0.65);
+                let pCBCount = Math.floor(totalUsers * 0.35);
+                
+                // Ensure at least 1 if there are any users
+                if (totalUsers > 0 && pCBCount === 0) pCBCount = 1;
+                
+                const p29El = document.getElementById('activePlayers29');
+                const pCBEl = document.getElementById('activePlayersCB');
+                
+                if (p29El) p29El.textContent = `👥 ${p29Count.toLocaleString()} খেলছে`;
+                if (pCBEl) pCBEl.textContent = `👥 ${pCBCount.toLocaleString()} খেলছে`;
+                
+            } catch(e) {
+                console.error("Error fetching real player count:", e);
+            }
+        }
+        
+        updateUserRankBadge();
+        animateActivePlayers();
+
+        function logout() {
+            if(confirm('আপনি কি লগ আউট করতে চান?')) {
+                localStorage.removeItem('isLoggedIn');
+                window.location.href = 'auth/login.html';
+            }
+        }
+
+        async function loadLeaderboard() {
+            const topThreeContainer = document.querySelector('#leaderboard .lb-top-three');
+            const listContainer = document.querySelector('#leaderboard .lb-list');
+            
+            try {
+                const snapshot = await firebase.database().ref('users').once('value');
+                const data = snapshot.val();
+                if (!data) {
+                    topThreeContainer.innerHTML = '<div style="text-align:center; color: white;">কোনো ডাটা পাওয়া যায়নি।</div>';
+                    listContainer.innerHTML = '';
+                    return;
+                }
+                
+                const users = [];
+                for (const phone in data) {
+                    const user = data[phone];
+                    users.push({
+                        phone: phone,
+                        name: user.profile?.name || user.name || 'অজানা',
+                        wins: user.stats?.wins || 0,
+                        avatar: user.profile?.avatarEmoji || user.avatar || '👤'
+                    });
+                }
+                users.sort((a, b) => b.wins - a.wins);
+                
+                // Render Top 3
+                topThreeContainer.innerHTML = '';
+                const top3 = users.slice(0, 3);
+                
+                const renderTopPlayer = (player, rank) => {
+                    if (!player) return '';
+                    const medal = rank === 1 ? '👑' : rank === 2 ? '🥈' : '🥉';
+                    return `
+                        <div class="lb-top-player" style="text-align: center; flex: 1;">
+                            <div class="ltp-avatar" style="font-size: 30px; position: relative; display: inline-block;">
+                                ${player.avatar}
+                                <div style="position: absolute; bottom: -5px; right: -5px; font-size: 14px; background: rgba(0,0,0,0.8); border-radius: 50%; width: 20px; height: 20px;">${medal}</div>
+                            </div>
+                            <div class="ltp-name" style="font-size: 14px; margin-top: 5px; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px; margin-left: auto; margin-right: auto;">${player.name}</div>
+                            <div class="ltp-score" style="font-size: 12px; color: var(--gold-light);">${player.wins} জয়</div>
+                        </div>
+                    `;
+                };
+                
+                let top3HTML = '';
+                if (top3[1]) top3HTML += renderTopPlayer(top3[1], 2);
+                if (top3[0]) top3HTML += renderTopPlayer(top3[0], 1);
+                if (top3[2]) top3HTML += renderTopPlayer(top3[2], 3);
+                topThreeContainer.innerHTML = top3HTML;
+                
+                // Render List
+                let listHTML = '';
+                const maxListSize = Math.min(20, users.length);
+                for (let i = 3; i < maxListSize; i++) {
+                    const u = users[i];
+                    listHTML += `
+                        <div class="lb-item" style="display: flex; align-items: center; padding: 12px; background: rgba(255,255,255,0.05); margin-bottom: 8px; border-radius: 8px;">
+                            <div class="lbi-rank" style="width: 30px; font-weight: bold; color: #888;">${i + 1}</div>
+                            <div class="lbi-avatar" style="font-size: 24px; margin-right: 12px;">${u.avatar}</div>
+                            <div class="lbi-info" style="flex: 1;">
+                                <div class="lbi-name" style="color: white; font-weight: 500;">${u.name}</div>
+                            </div>
+                            <div class="lbi-score" style="color: var(--gold-light); font-weight: bold;">${u.wins} জয়</div>
+                        </div>
+                    `;
+                }
+                
+                const myPhone = localStorage.getItem('phone') || (localStorage.getItem('29card_profile') ? JSON.parse(localStorage.getItem('29card_profile')).id : null);
+                const myIndex = users.findIndex(u => u.phone === myPhone);
+                
+                let myName = 'আপনি';
+                let myAvatar = '👤';
+                let myWins = 0;
+                let myRank = users.length + 1;
+                
+                if (myIndex !== -1) {
+                    myName = users[myIndex].name;
+                    myAvatar = users[myIndex].avatar;
+                    myWins = users[myIndex].wins;
+                    myRank = myIndex + 1;
+                } else if (localStorage.getItem('29card_profile')) {
+                    const prof = JSON.parse(localStorage.getItem('29card_profile'));
+                    if (prof.name) myName = prof.name;
+                    if (prof.avatarEmoji || prof.avatar) myAvatar = prof.avatarEmoji || prof.avatar;
+                }
+                
+                if (myIndex >= 20 || myIndex === -1) {
+                    listHTML += `
+                        <div style="text-align: center; color: #888; margin: 10px 0;">...</div>
+                        <div class="lb-item highlight-my-rank" style="display: flex; align-items: center; padding: 12px; background: rgba(241, 196, 15, 0.1); border: 1px solid rgba(241, 196, 15, 0.3); margin-bottom: 8px; border-radius: 8px;">
+                            <div class="lbi-rank" style="width: 30px; font-weight: bold; color: #f1c40f;">${myRank}</div>
+                            <div class="lbi-avatar" style="font-size: 24px; margin-right: 12px;">${myAvatar}</div>
+                            <div class="lbi-info" style="flex: 1;">
+                                <div class="lbi-name" style="color: white; font-weight: 500;">${myName} ${myIndex !== -1 ? '(আপনি)' : ''}</div>
+                            </div>
+                            <div class="lbi-score" style="color: var(--gold-light); font-weight: bold;">${myWins} জয়</div>
+                        </div>
+                    `;
+                }
+                
+                listContainer.innerHTML = listHTML;
+                listContainer.style.display = 'block';
+            } catch(e) {
+                console.error(e);
+                topThreeContainer.innerHTML = '<div style="text-align:center; color: #e74c3c;">লোড করতে সমস্যা হয়েছে।</div>';
+                listContainer.innerHTML = '';
+            }
+        }
+    </script>
+</body>
 </html>

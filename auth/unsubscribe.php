@@ -103,6 +103,20 @@ $success =
     $statusCode === 'S1000' ||
     strtoupper((string)$subscriptionStatus) === 'UNREGISTERED';
 
+if ($success) {
+    // Delete user from Firebase so they lose rank/stats if they subscribe again later
+    $firebaseUrl = "https://card-ae1f3-default-rtdb.firebaseio.com/users/{$digits}.json";
+    $chFb = curl_init();
+    if ($chFb) {
+        curl_setopt($chFb, CURLOPT_URL, $firebaseUrl);
+        curl_setopt($chFb, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt($chFb, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($chFb, CURLOPT_TIMEOUT, 10);
+        curl_exec($chFb);
+        curl_close($chFb);
+    }
+}
+
 echo json_encode([
     'success' => $success,
     'subscriberId' => $subscriberId,

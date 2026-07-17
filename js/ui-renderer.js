@@ -21,14 +21,42 @@ const UIRenderer = (() => {
         const nameEl = document.querySelector('#home .player-name');
         if (nameEl) nameEl.innerText = profile.name;
         
-        const levelEl = document.querySelector('#home .player-level');
-        if (levelEl) {
-            const phone = localStorage.getItem('phone') || profile.id; // fallback to ID if no phone
-            levelEl.innerText = phone;
-        }
-        
         const avatarEl = document.querySelector('#home .avatar');
-        if (avatarEl) avatarEl.innerHTML = `${profile.avatarEmoji}<div class="level-badge">${profile.level}</div>`;
+        if (avatarEl) avatarEl.innerHTML = `${profile.avatarEmoji}<div class="level-badge" id="c29LevelBadge">...</div>`;
+        
+        const phone = localStorage.getItem('phone') || profile.id; // fallback to ID if no phone
+        
+        // Fetch from firebase to get dynamic rank and level
+        if (typeof firebase !== 'undefined' && firebase.database) {
+            firebase.database().ref('users').once('value').then(snapshot => {
+                const data = snapshot.val();
+                if (data) {
+                    // 1. Calculate Rank
+                    const users = Object.values(data);
+                    users.sort((a, b) => {
+                        const aWins = (a.stats && a.stats.wins) ? a.stats.wins : 0;
+                        const bWins = (b.stats && b.stats.wins) ? b.stats.wins : 0;
+                        return bWins - aWins;
+                    });
+                    let myRank = users.findIndex(u => u.phone === phone) + 1;
+                    if (myRank === 0) myRank = users.length + 1;
+                    
+                    const badge = document.querySelector('#home .level-badge');
+                    if (badge) badge.textContent = myRank;
+                    
+                    // 2. Calculate Level
+                    let wins = 0;
+                    if (data[phone] && data[phone].stats && data[phone].stats.wins) {
+                        wins = data[phone].stats.wins;
+                    }
+                    const level = Math.floor(wins / 100) + 1;
+                    const rankName = level < 2 ? 'ব্রোঞ্জ' : level < 4 ? 'সিলভার' : level < 6 ? 'গোল্ড' : 'ডায়মন্ড';
+                    
+                    const levelEl = document.querySelector('#home .player-level');
+                    if (levelEl) levelEl.textContent = `লেভেল ${level} • ${rankName}`;
+                }
+            }).catch(err => console.error(err));
+        }
     }
 
     function renderProfile() {

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>কল ব্রিজ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Specific adjustments for call bridge splash */
+        .splash-title-cb {
+            font-size: 42px;
+            font-weight: 900;
+            margin: 20px 0 5px 0;
+            background: linear-gradient(135deg, #0984e3, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 15px rgba(9, 132, 227, 0.4);
+        }
+        
+        /* Bidding Modal Styles */
+        .custom-modal-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .custom-modal {
+            background: linear-gradient(180deg, #1a2a3a, #0d1620);
+            border: 2px solid var(--gold-primary, #f1c40f);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            width: 85%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+        }
+        .custom-modal h3 {
+            color: white;
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* Bot Bid Badge */
+        .bot-bid-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #2c3e50;
+            border: 1px solid var(--gold-primary, #f1c40f);
+            color: var(--gold-primary, #f1c40f);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        /* Disabled Card Style */
+        .disabled-card {
+            filter: brightness(0.4) grayscale(0.3);
+            cursor: not-allowed !important;
+            pointer-events: none;
+        }
+
+        /* Trick Area Styles */
+        .trick-area {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            z-index: 5;
+        }
+        .trick-card {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .trick-card.red { color: #e74c3c; }
+        .trick-card.black { color: #1a1a1a; }
+        .trick-card .hc-rank {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            font-size: 14px;
+            line-height: 1;
+        }
+        .trick-card .hc-suit {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        /* Custom Modal Styles */
+        .custom-modal-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .custom-modal {
+            background: linear-gradient(145deg, #1f1f1f, #121212);
+            border: 2px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            width: 85%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.8);
+        }
+        .custom-modal h3 {
+            color: var(--text-primary);
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        .custom-modal p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .game-btn {
+            background: linear-gradient(135deg, var(--green-dark), var(--green-primary));
+            border: 1px solid var(--border-gold);
+            color: var(--text-primary);
+            padding: 10px 0;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .game-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .highlight-card {
+            position: relative;
+            transform: translateY(-10px);
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.8), 0 5px 15px rgba(0,0,0,0.5);
+            border: 2px solid #f1c40f;
+            z-index: 10;
+        }
+        
+        .highlight-card:hover {
+            transform: translateY(-20px) !important;
+            z-index: 100 !important;
+            box-shadow: 0 0 25px rgba(241, 196, 15, 1), 0 10px 20px rgba(0,0,0,0.6) !important;
+        }
+        
+        .highlight-card:active {
+            transform: translateY(-5px) !important;
+            z-index: 100 !important;
+            box-shadow: 0 0 10px rgba(241, 196, 15, 0.8), 0 2px 5px rgba(0,0,0,0.5) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Phone Frame -->
+    <div class="phone-frame">
+        <!-- 1. SPLASH SCREEN -->
+        <div class="screen active" id="splash">
+            <div class="splash-bg-cards">
+                <div class="card-bg">♠</div>
+                <div class="card-bg">♥</div>
+                <div class="card-bg">♦</div>
+                <div class="card-bg">♣</div>
+            </div>
+            <div class="particles">
+                <div class="particle" style="left:20%;animation-delay:0s"></div>
+                <div class="particle" style="left:40%;animation-delay:1s"></div>
+                <div class="particle" style="left:60%;animation-delay:2s"></div>
+                <div class="particle" style="left:80%;animation-delay:0.5s"></div>
+                <div class="particle" style="left:30%;animation-delay:1.5s"></div>
+                <div class="particle" style="left:70%;animation-delay:2.5s"></div>
+            </div>
+            <div class="splash-glow"></div>
+            <div class="splash-logo">
+                <div class="splash-cards-fan">
+                    <!-- Spades focused for Call Bridge -->
+                    <div class="mini-card"><span class="suit-top">A</span><span class="suit-center">♠</span></div>
+                    <div class="mini-card"><span class="suit-top">K</span><span class="suit-center">♠</span></div>
+                    <div class="mini-card"><span class="suit-top">Q</span><span class="suit-center">♠</span></div>
+                    <div class="mini-card"><span class="suit-top">J</span><span class="suit-center">♠</span></div>
+                </div>
+                <div class="splash-title-cb">কল ব্রিজ</div>
+                <div class="splash-subtitle">CALL BRIDGE</div>
+            </div>
+            <div class="splash-loading">
+                <div class="splash-loading-bar">
+                    <div class="splash-loading-fill"></div>
+                </div>
+                <div class="splash-loading-text">লোড হচ্ছে...</div>
+            </div>
+            <div class="splash-version">v1.0.0</div>
+        </div>
+
+        <!-- 2. HOME SCREEN -->
+        <div class="screen" id="home">
+            <div class="top-bar">
+                <div class="avatar" id="cbAvatar">
+                    👤
+                    <div class="level-badge" id="cbLevelBadge">25</div>
+                </div>
+                <div class="player-info">
+                    <div class="player-name" id="cbUserName">খেলোয়াড়</div>
+                    <div class="player-level" id="cbPhone">লেভেল ২৫ • গোল্ড</div>
+                </div>
+                <div class="settings-btn" style="margin-right: 12px; background: rgba(108, 92, 231, 0.2);" onclick="window.location.href='index.html'" title="গেম পোর্টাল">🎮</div>
+                <div class="settings-btn" onclick="showScreen('settings')" title="সেটিংস">⚙️</div>
+            </div>
+
+            <div class="home-banner" style="background: linear-gradient(135deg, #0984e3, #6c5ce7);">
+                <div class="banner-label">♠️ কল ব্রিজ</div>
+                <div class="banner-title">খেলা শুরু করুন</div>
+            </div>
+
+            <div class="home-menu">
+                <button class="btn-glass" onclick="CBApp.startMatchmaking()">
+                    <div class="icon">🌐</div>
+                    <div class="btn-text">অনলাইন খেলুন<span>অন্য খেলোয়াড়দের সাথে</span></div>
+                    <div class="arrow">›</div>
+                </button>
+                <button class="btn-glass" onclick="startBotMatch()">
+                    <div class="icon">🤖</div>
+                    <div class="btn-text">বটের সাথে খেলুন<span>অফলাইন অনুশীলন</span></div>
+                    <div class="arrow">›</div>
+                </button>
+            </div>
+
+            <div class="bottom-nav">
+                <div class="nav-item active" onclick="window.location.href='index.html'">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-label">হোম</div>
+                </div>
+                <div class="nav-item" onclick="window.location.href='index.html?screen=leaderboard'">
+                    <div class="nav-icon">🏆</div>
+                    <div class="nav-label">লিডারবোর্ড</div>
+                </div>
+                <div class="nav-item" onclick="window.location.href='index.html?screen=profile'">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-label">প্রোফাইল</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="screen" id="settings">
+            <div class="screen-header">
+                <div class="back-btn" onclick="showScreen('home')">←</div>
+                <h2>সেটিংস</h2>
+            </div>
+            <div class="screen-content">
+                <div class="settings-group">
+                    <div class="settings-group-title">ভাষা</div>
+                    <div class="settings-item">
+                        <div class="si-icon">🌐</div>
+                        <div class="si-label">ভাষা</div>
+                        <div class="si-value">বাংলা</div>
+                        <div class="si-arrow">›</div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <div class="settings-group-title">অডিও</div>
+                    <div class="settings-item">
+                        <div class="si-icon">🔊</div>
+                        <div class="si-label">সাউন্ড ইফেক্ট</div>
+                        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="si-icon">🎵</div>
+                        <div class="si-label">ব্যাকগ্রাউন্ড মিউজিক</div>
+                        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="si-icon">📳</div>
+                        <div class="si-label">ভাইব্রেশন</div>
+                        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <div class="settings-group-title">গ্রাফিক্স</div>
+                    <div class="settings-item">
+                        <div class="si-icon">✨</div>
+                        <div class="si-label">গ্রাফিক্স কোয়ালিটি</div>
+                        <div class="si-value">উচ্চ</div>
+                        <div class="si-arrow">›</div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <div class="settings-group-title">প্রাইভেসি</div>
+                    <div class="settings-item">
+                        <div class="si-icon">🔒</div>
+                        <div class="si-label">প্রাইভেসি সেটিংস</div>
+                        <div class="si-arrow">›</div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="si-icon">🔔</div>
+                        <div class="si-label">নোটিফিকেশন</div>
+                        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <div class="settings-group-title">অ্যাকাউন্ট</div>
+                    <div class="settings-item">
+                        <div class="si-icon">👤</div>
+                        <div class="si-label">অ্যাকাউন্ট তথ্য</div>
+                        <div class="si-arrow">›</div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="si-icon">📧</div>
+                        <div class="si-label">সাপোর্ট</div>
+                        <div class="si-arrow">›</div>
+                    </div>
+                </div>
+
+                <div style="text-align:center;padding:16px;color:var(--text-muted);font-size:11px">
+                    কল ব্রিজ v1.0.0<br>
+                    © ২০২৬ সর্বস্বত্ব সংরক্ষিত
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. GAME BOARD -->
+        <div class="screen" id="gameBoard">
+            <div class="game-top-bar">
+                <button id="btnLeaveMatch" class="game-action-btn" onclick="leaveMatch()" style="position: relative; z-index: 10000; cursor: pointer; pointer-events: auto; background: rgba(255,50,50,0.2); border: 1px solid rgba(255,50,50,0.5); outline: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffb3b3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="pointer-events: none;">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <div class="game-scores">
+                    <div class="score-chip team-a" id="roundInfo">Rnd 1/5</div>
+                    <div class="score-chip team-b" id="trumpInfo">ট্রাম্প: ♠️</div>
+                </div>
+                <div class="game-actions">
+                    <div class="game-action-btn"
+                        onclick="document.getElementById('quickChatPopup').classList.toggle('show'); document.getElementById('emojiPopup').classList.remove('show');">
+                        💬</div>
+                    <div class="game-action-btn"
+                        onclick="document.getElementById('emojiPopup').classList.toggle('show'); document.getElementById('quickChatPopup').classList.remove('show');">
+                        😀</div>
+                </div>
+            </div>
+
+            <div class="game-table">
+                <div id="quickChatPopup" class="quick-chat-popup">
+                    <div class="chat-header">
+                        <span style="font-size: 11px; color: var(--text-muted);">মেসেজ পাঠান</span>
+                        <div class="chat-close"
+                            onclick="document.getElementById('quickChatPopup').classList.remove('show')">✕</div>
+                    </div>
+                    <div class="chat-option" onclick="if(window.CBApp) CBApp.sendChat('তাড়াতাড়ি খেলুন!')">তাড়াতাড়ি খেলুন!</div>
+                    <div class="chat-option" onclick="if(window.CBApp) CBApp.sendChat('দারুণ চাল!')">দারুণ চাল!</div>
+                    <div class="chat-option" onclick="if(window.CBApp) CBApp.sendChat('ট্রাম্পটা আমার ছিল!')">ট্রাম্পটা আমার ছিল!</div>
+                    <div class="chat-option" onclick="if(window.CBApp) CBApp.sendChat('ভুল কার্ড!')">ভুল কার্ড!</div>
+                    <div class="chat-option" onclick="if(window.CBApp) CBApp.sendChat('খেলা জমেছে!')">খেলা জমেছে!</div>
+                </div>
+
+                <div id="emojiPopup" class="quick-chat-popup emoji-popup">
+                    <div class="chat-header">
+                        <span style="font-size: 11px; color: var(--text-muted);">ইমোজি</span>
+                        <div class="chat-close"
+                            onclick="document.getElementById('emojiPopup').classList.remove('show')">✕</div>
+                    </div>
+                    <div class="emoji-grid">
+                        <div class="emoji-option" onclick="if(window.CBApp) CBApp.sendChat('😀'); document.getElementById('emojiPopup').classList.remove('show');">😀</div>
+                        <div class="emoji-option" onclick="if(window.CBApp) CBApp.sendChat('😂'); document.getElementById('emojiPopup').classList.remove('show');">😂</div>
+                        <div class="emoji-option" onclick="if(window.CBApp) CBApp.sendChat('😍'); document.getElementById('emojiPopup').classList.remove('show');">😍</div>
+                        <div class="emoji-option" onclick="if(window.CBApp) CBApp.sendChat('😎'); document.getElementById('emojiPopup').classList.remove('show');">😎</div>
+                        <div class="emoji-option" onclick="if(window.CBApp) CBApp.sendChat('😢'); document.getElementById('emojiPopup').classList.remove('show');">😢</div>
+                        <div class="emoji-option" onclick="if(window.CBApp) CBApp.sendChat('😡'); document.getElementById('emojiPopup').classList.remove('show');">😡</div>
+                        <div class="emoji-option" onclick="if(window.CBApp) CBApp.sendChat('👏'); document.getElementById('emojiPopup').classList.remove('show');">👏</div>
+                        <div class="emoji-option" onclick="if(window.CBApp) CBApp.sendChat('👍'); document.getElementById('emojiPopup').classList.remove('show');">👍</div>
+                        <div class="emoji-option" onclick="if(window.CBApp) CBApp.sendChat('👎'); document.getElementById('emojiPopup').classList.remove('show');">👎</div>
+                        <div class="emoji-option" onclick="if(window.CBApp) CBApp.sendChat('💔'); document.getElementById('emojiPopup').classList.remove('show');">💔</div>
+                    </div>
+                </div>
+
+                <div class="table-felt" id="gameTableFelt">
+                    <!-- Players and Trick Area dynamically inserted by cb-ui.js -->
+                </div>
+            </div>
+            
+            <div class="player-hand" id="myHand" style="padding-top: 30px; padding-bottom: 20px;">
+                <!-- Cards will be dynamically inserted here -->
+            </div>
+
+            <!-- Bidding Bottom Bar (Like 29 Card) -->
+            <div class="game-bottom-bar" id="biddingBar" style="display: none; padding: 10px;">
+                <!-- Bid buttons generated dynamically -->
+            </div>
+        </div>
+
+        <!-- 4. ONLINE LOBBY SCREEN -->
+        <div class="screen" id="onlineLobby">
+            <div class="screen-header">
+                <div class="back-btn" onclick="showScreen('home')">←</div>
+                <h2>অনলাইন খেলুন</h2>
+            </div>
+            <div class="screen-content">
+                <div class="matchmaking-panel online-lobby-panel" style="display: block; text-align: left;">
+                    <div class="section-title" style="padding:0 16px; margin-top:16px;">লবি (Lobby)</div>
+                    <div class="friend-list" id="cbOnlineLobbySlots">
+                        <div class="friend-item">
+                            <div class="fi-avatar">😎<div class="online-dot"></div></div>
+                            <div class="fi-info">
+                                <div class="fi-name">আপনি (Host)</div>
+                                <div class="fi-status">সংযুক্ত</div>
+                            </div>
+                        </div>
+                        <div class="friend-item empty-slot">
+                            <div class="fi-avatar" style="background: rgba(255,255,255,0.1)">?</div>
+                            <div class="fi-info">
+                                <div class="fi-name" style="color: var(--text-muted)">অপেক্ষায়...</div>
+                            </div>
+                        </div>
+                        <div class="friend-item empty-slot">
+                            <div class="fi-avatar" style="background: rgba(255,255,255,0.1)">?</div>
+                            <div class="fi-info">
+                                <div class="fi-name" style="color: var(--text-muted)">অপেক্ষায়...</div>
+                            </div>
+                        </div>
+                        <div class="friend-item empty-slot">
+                            <div class="fi-avatar" style="background: rgba(255,255,255,0.1)">?</div>
+                            <div class="fi-info">
+                                <div class="fi-name" style="color: var(--text-muted)">অপেক্ষায়...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-title" id="cbOnlineUsersTitle" style="padding:0 16px; margin-top:24px;">অনলাইন বন্ধুরা</div>
+                    <div class="friend-list" id="cbDynamicOnlineUsersList">
+                        <!-- Real-time users will be rendered here via Firebase -->
+                    </div>
+
+                    <div class="btn-container" style="margin-top: 24px;">
+                        <button id="cbStartOnlineMatchBtn" class="game-btn primary"
+                            onclick="CBApp.startLobbyGame()" disabled style="opacity: 0.5; width: 100%;">গেম শুরু করুন</button>
+                        <div id="cbWaitingForHostMsg" style="display: none; text-align: center; color: #f1c40f; font-weight: bold; padding: 12px; background: rgba(241, 196, 15, 0.1); border-radius: 8px; border: 1px dashed #f1c40f;">
+                            হোস্ট গেম শুরু করার জন্য অপেক্ষা করুন...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/network.js"></script>
+
+    <script src="js/cb-engine.js"></script>
+    <script src="js/cb-bot.js"></script>
+    <script src="js/cb-ui.js"></script>
+    <script src="js/cb-app.js"></script>
+    
+    <script>
+        // Init profile
+        window.onload = async () => {
+            try {
+                // Try 29card_profile first, fallback to userProfile
+                let profileStr = localStorage.getItem('29card_profile') || localStorage.getItem('userProfile');
+                if (profileStr) {
+                    const profile = JSON.parse(profileStr);
+                    if (profile.name) {
+                        document.getElementById('cbUserName').textContent = profile.name;
+                    }
+                    if (profile.avatar) {
+                        const avatarEl = document.getElementById('cbAvatar');
+                        avatarEl.innerHTML = profile.avatar + '<div class="level-badge" id="cbLevelBadge">...</div>';
+                    }
+                    const phone = localStorage.getItem('phone') || profile.id;
+                    if (phone) {
+                        // document.getElementById('cbPhone').textContent = phone; // Replace this with actual Level
+                        
+                        // Fetch from firebase to get dynamic rank and level
+                        if (typeof firebase !== 'undefined' && firebase.database) {
+                            const snapshot = await firebase.database().ref('users').once('value');
+                            const data = snapshot.val();
+                            if (data) {
+                                // 1. Calculate Rank
+                                const users = Object.values(data);
+                                users.sort((a, b) => {
+                                    const aWins = (a.stats && a.stats.wins) ? a.stats.wins : 0;
+                                    const bWins = (b.stats && b.stats.wins) ? b.stats.wins : 0;
+                                    return bWins - aWins;
+                                });
+                                let myRank = users.findIndex(u => u.phone === phone) + 1;
+                                if (myRank === 0) myRank = users.length + 1;
+                                
+                                const badge = document.getElementById('cbLevelBadge');
+                                if (badge) badge.textContent = myRank;
+                                
+                                // 2. Calculate Level
+                                let wins = 0;
+                                if (data[phone] && data[phone].stats && data[phone].stats.wins) {
+                                    wins = data[phone].stats.wins;
+                                }
+                                const level = Math.floor(wins / 100) + 1;
+                                const rankName = level < 2 ? 'ব্রোঞ্জ' : level < 4 ? 'সিলভার' : level < 6 ? 'গোল্ড' : 'ডায়মন্ড';
+                                
+                                const levelEl = document.getElementById('cbPhone');
+                                if (levelEl) levelEl.textContent = `লেভেল ${level} • ${rankName}`;
+                            }
+                        }
+                    }
+                }
+            } catch(e) {
+                console.error("Error loading profile:", e);
+            }
+        }
+
+        // Auto navigate from splash to home after 3 seconds
+        setTimeout(() => {
+            document.getElementById('splash').classList.remove('active');
+            document.getElementById('home').classList.add('active');
+        }, 3000);
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function startBotMatch() {
+            showScreen('gameBoard');
+            if (window.CBApp) CBApp.startBotMatch();
+        }
+
+        function showCustomConfirm(title, message) {
+            return new Promise((resolve) => {
+                let overlay = document.getElementById("cbConfirmModal");
+                
+                if (!overlay) {
+                    overlay = document.createElement("div");
+                    overlay.id = "cbConfirmModal";
+                    overlay.style.cssText = "display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); z-index: 9999999; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(4px);";
+                    
+                    overlay.innerHTML = `
+                        <div class="custom-modal" style="background: linear-gradient(145deg, #1f1f1f, #121212); border: 2px solid #f1c40f; border-radius: 16px; padding: 24px; width: 85%; max-width: 320px; text-align: center; box-shadow: 0 16px 48px rgba(0,0,0,0.8); font-family: 'Noto Sans Bengali', sans-serif;">
+                            <h3 id="cb-title" style="color: white; font-size: 18px; margin-bottom: 12px;"></h3>
+                            <p id="cb-message" style="color: #aaa; font-size: 14px; margin-bottom: 20px;"></p>
+                            <div style="display: flex; gap: 12px; justify-content: center;">
+                                <button id="cb-cancel-btn" style="flex: 1; background: #333; color: white; padding: 10px 0; border-radius: 8px; border: 1px solid #555; font-weight: bold; cursor: pointer;">না</button>
+                                <button id="cb-confirm-btn" style="flex: 1; background: #e74c3c; color: white; padding: 10px 0; border-radius: 8px; border: 1px solid #c0392b; font-weight: bold; cursor: pointer;">হ্যাঁ</button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(overlay);
+                }
+
+                const titleEl = document.getElementById("cb-title");
+                const msgEl = document.getElementById("cb-message");
+                const btnCancel = document.getElementById("cb-cancel-btn");
+                const btnConfirm = document.getElementById("cb-confirm-btn");
+
+                if (title) titleEl.textContent = title;
+                if (message) msgEl.innerHTML = message;
+
+                const cleanup = (result) => {
+                    overlay.style.display = "none";
+                    btnCancel.removeEventListener("click", onCancel);
+                    btnConfirm.removeEventListener("click", onConfirm);
+                    resolve(result);
+                };
+
+                const onCancel = () => cleanup(false);
+                const onConfirm = () => cleanup(true);
+
+                btnCancel.addEventListener("click", onCancel);
+                btnConfirm.addEventListener("click", onConfirm);
+
+                overlay.style.display = "flex";
+            });
+        }
+
+        function showCustomAlert(title, message) {
+            return new Promise((resolve) => {
+                let overlay = document.getElementById("cbAlertModal");
+                
+                if (!overlay) {
+                    overlay = document.createElement("div");
+                    overlay.id = "cbAlertModal";
+                    overlay.style.cssText = "display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); z-index: 9999999; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(4px);";
+                    
+                    overlay.innerHTML = `
+                        <div class="custom-modal" style="background: linear-gradient(145deg, #1f1f1f, #121212); border: 2px solid #f1c40f; border-radius: 16px; padding: 24px; width: 85%; max-width: 320px; text-align: center; box-shadow: 0 16px 48px rgba(0,0,0,0.8); font-family: 'Noto Sans Bengali', sans-serif;">
+                            <h3 id="cba-title" style="color: white; font-size: 18px; margin-bottom: 12px;"></h3>
+                            <p id="cba-message" style="color: #aaa; font-size: 14px; margin-bottom: 20px;"></p>
+                            <div style="display: flex; gap: 12px; justify-content: center;">
+                                <button id="cba-confirm-btn" style="flex: 1; background: #e74c3c; color: white; padding: 10px 0; border-radius: 8px; border: 1px solid #c0392b; font-weight: bold; cursor: pointer;">OK</button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(overlay);
+                }
+
+                const titleEl = document.getElementById("cba-title");
+                const msgEl = document.getElementById("cba-message");
+                const btnConfirm = document.getElementById("cba-confirm-btn");
+
+                if (title) titleEl.textContent = title;
+                if (message) msgEl.innerHTML = message;
+
+                const cleanup = () => {
+                    overlay.style.display = "none";
+                    btnConfirm.removeEventListener("click", onConfirm);
+                    resolve();
+                };
+
+                const onConfirm = () => cleanup();
+
+                btnConfirm.addEventListener("click", onConfirm);
+
+                overlay.style.display = "flex";
+            });
+        }
+
+        async function leaveMatch() {
+            try {
+                const confirmLeave = await showCustomConfirm("গেম থেকে বের হতে চান?", "আপনি কি নিশ্চিত যে গেম থেকে বের হতে চান? আপনার বর্তমান গেমটি বাতিল হয়ে যাবে।");
+                if (confirmLeave) {
+                    if (window.CBApp && window.CBApp.isOnlineMatch) {
+                        if (typeof FirebaseManager !== 'undefined' && window.CBApp.hostPhone) {
+                            FirebaseManager.sendGameAction(window.CBApp.hostPhone, 'LEAVE', {}, window.CBApp.myPlayerIndex);
+                        }
+                    }
+                    showScreen('home');
+                    if (window.CBApp) {
+                        window.CBApp.engine = null; // Reset engine
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        window.addEventListener('beforeunload', () => {
+            if (window.CBApp && window.CBApp.isOnlineMatch && typeof FirebaseManager !== 'undefined' && window.CBApp.hostPhone) {
+                // Use navigator.sendBeacon or a synchronous fetch if possible, but Firebase often flushes on unload
+                FirebaseManager.sendGameAction(window.CBApp.hostPhone, 'LEAVE', {}, window.CBApp.myPlayerIndex);
+            }
+        });
+    </script>
+</body>
+</html>

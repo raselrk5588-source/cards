@@ -91,11 +91,11 @@ const FirebaseManager = {
             
             // --- AI BOTS ---
             const staticBots = [
-                { phone: 'bot_1', name: 'Hasan (Bot)', avatar: '👦', status: 'online' },
-                { phone: 'bot_2', name: 'Rahim (Bot)', avatar: '👨', status: 'online' },
-                { phone: 'bot_3', name: 'Ayesha (Bot)', avatar: '👩', status: 'online' },
-                { phone: 'bot_4', name: 'Karim (Bot)', avatar: '🧔', status: 'online' },
-                { phone: 'bot_5', name: 'Sumi (Bot)', avatar: '👱‍♀️', status: 'online' }
+                { phone: 'bot_1', name: 'Hasan', avatar: '👦', status: 'online' },
+                { phone: 'bot_2', name: 'Rahim', avatar: '👨', status: 'online' },
+                { phone: 'bot_3', name: 'Ayesha', avatar: '👩', status: 'online' },
+                { phone: 'bot_4', name: 'Karim', avatar: '🧔', status: 'online' },
+                { phone: 'bot_5', name: 'Sumi', avatar: '👱‍♀️', status: 'online' }
             ];
             
             // Append bots to the end of the users list
@@ -128,11 +128,11 @@ const FirebaseManager = {
                 if (this._inviteResponseCallback) {
                     // Extract bot name from the bots array
                     const bots = [
-                        { phone: 'bot_1', name: 'Hasan (Bot)', avatar: '👦' },
-                        { phone: 'bot_2', name: 'Rahim (Bot)', avatar: '👨' },
-                        { phone: 'bot_3', name: 'Ayesha (Bot)', avatar: '👩' },
-                        { phone: 'bot_4', name: 'Karim (Bot)', avatar: '🧔' },
-                        { phone: 'bot_5', name: 'Sumi (Bot)', avatar: '👱‍♀️' }
+                        { phone: 'bot_1', name: 'Hasan', avatar: '👦' },
+                        { phone: 'bot_2', name: 'Rahim', avatar: '👨' },
+                        { phone: 'bot_3', name: 'Ayesha', avatar: '👩' },
+                        { phone: 'bot_4', name: 'Karim', avatar: '🧔' },
+                        { phone: 'bot_5', name: 'Sumi', avatar: '👱‍♀️' }
                     ];
                     const bot = bots.find(b => b.phone === recipientPhone) || { name: 'Bot', avatar: '🤖' };
                     
@@ -320,6 +320,7 @@ const FirebaseManager = {
         const database = firebase.database();
         const actionsRef = database.ref(`online_match/${hostPhone}/actions`);
         
+        actionsRef.off('child_added'); // Prevent duplicate listeners
         // Listen for new actions added
         actionsRef.on('child_added', (snapshot) => {
             if (callback) callback(snapshot.val());
