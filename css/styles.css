@@ -579,13 +579,13 @@
         .home-banner::before {
             content: '🃏';
             position: absolute;
-            right: 10px;
-            bottom: -10px;
-            font-size: 65px;
+            right: 20px;
+            bottom: 5px;
+            font-size: 60px;
             line-height: 1;
             transform: rotate(-10deg);
-            opacity: 0.9;
-            text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.4);
+            opacity: 1;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .home-banner .banner-label {
