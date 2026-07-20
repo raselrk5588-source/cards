@@ -127,6 +127,14 @@
                 </button>
             </div>
 
+            <div class="quick-actions">
+                <div class="quick-action-card" onclick="showScreen('howToPlay')">
+                    <div class="qa-icon">📖</div>
+                    <div class="qa-label">কিভাবে খেলবেন</div>
+                    <div class="qa-desc">নিয়মাবলী শিখুন</div>
+                </div>
+            </div>
+
             <div class="bottom-nav">
                 <div class="nav-item active" onclick="window.location.href='index.html'">
                     <div class="nav-icon">🏠</div>
@@ -271,6 +279,40 @@
             
             <div class="player-hand" id="myHand" style="padding-top: 30px; padding-bottom: 20px;">
                 <!-- Cards will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- HOW TO PLAY -->
+        <div class="screen" id="howToPlay">
+            <div class="screen-header">
+                <div class="back-btn" onclick="showScreen('home')">←</div>
+                <h2>কিভাবে খেলবেন</h2>
+            </div>
+            <div class="screen-content">
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tc-step">1</div>
+                        <div class="tc-title">🃏 কার্ড বিতরণ</div>
+                        <div class="tc-desc">চারজন খেলোয়াড় খেলে। ৫২ কার্ডের ডেক থেকে প্রত্যেককে ১৩টি করে কার্ড দেওয়া হয়।</div>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tc-step">2</div>
+                        <div class="tc-title">🃏 সেট তৈরি</div>
+                        <div class="tc-desc">১৩টি কার্ড দিয়ে ৩টি কার্ডের ৪টি সেট এবং ১টি সিঙ্গেল কার্ড তৈরি করতে হয় (৩+৩+৩+৩+১ = ১৩)।</div>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tc-step">3</div>
+                        <div class="tc-title">♥️ সেটের র‍্যাঙ্কিং</div>
+                        <div class="tc-desc">ট্রয় (Troy), কালার রান (Color Run), রান (Run), কালার (Color), পেয়ার (Pair) এবং হাই কার্ড (High Card) অনুযায়ী সেটের পয়েন্ট নির্ধারিত হয়।</div>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tc-step">4</div>
+                        <div class="tc-title">🎯 পয়েন্ট অর্জন</div>
+                        <div class="tc-desc">
+                            প্রতি রাউন্ডে খেলোয়াড়রা তাদের একটি করে সেট শো করে এবং সর্বোচ্চ সেট জয়ী হয়। ১০০০ পয়েন্ট যে আগে অর্জন করে, সে জয়ী হয়।
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -254,6 +254,14 @@
                 </button>
             </div>
 
+            <div class="quick-actions">
+                <div class="quick-action-card" onclick="showScreen('howToPlay')">
+                    <div class="qa-icon">📖</div>
+                    <div class="qa-label">কিভাবে খেলবেন</div>
+                    <div class="qa-desc">নিয়মাবলী শিখুন</div>
+                </div>
+            </div>
+
             <div class="bottom-nav">
                 <div class="nav-item active" onclick="window.location.href='index.html'">
                     <div class="nav-icon">🏠</div>
@@ -468,6 +476,41 @@
                             onclick="CBApp.startLobbyGame()" disabled style="opacity: 0.5; width: 100%;">গেম শুরু করুন</button>
                         <div id="cbWaitingForHostMsg" style="display: none; text-align: center; color: #f1c40f; font-weight: bold; padding: 12px; background: rgba(241, 196, 15, 0.1); border-radius: 8px; border: 1px dashed #f1c40f;">
                             হোস্ট গেম শুরু করার জন্য অপেক্ষা করুন...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HOW TO PLAY -->
+        <div class="screen" id="howToPlay">
+            <div class="screen-header">
+                <div class="back-btn" onclick="showScreen('home')">←</div>
+                <h2>কিভাবে খেলবেন</h2>
+            </div>
+            <div class="screen-content">
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tc-step">1</div>
+                        <div class="tc-title">🃏 কার্ড বিতরণ</div>
+                        <div class="tc-desc">চারজন খেলোয়াড় খেলে। ৫২ কার্ডের ডেক থেকে প্রত্যেককে ১৩টি করে কার্ড দেওয়া হয়।</div>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tc-step">2</div>
+                        <div class="tc-title">📢 কল বা বিডিং</div>
+                        <div class="tc-desc">খেলোয়াড়রা তাদের কার্ড দেখে অনুমান করে তারা কয়টি হাত (ট্রিক) জিততে পারবে এবং সেই অনুযায়ী কল বা বিড করে (১ থেকে ১৩ পর্যন্ত)।</div>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tc-step">3</div>
+                        <div class="tc-title">♥️ ট্রাম্প সুট</div>
+                        <div class="tc-desc">কল ব্রিজে 'স্পেড' (♠) হলো ফিক্সড ট্রাম্প। অন্য কোনো কার্ড না থাকলে স্পেড দিয়ে জেতা যায়।</div>
+                        <div class="tc-visual">♠</div>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tc-step">4</div>
+                        <div class="tc-title">🎯 পয়েন্ট গণনা</div>
+                        <div class="tc-desc">
+                            যতগুলো কল করা হয়েছে, ততগুলো বা তার বেশি হাত জিতলে পয়েন্ট পাওয়া যায়। কলের চেয়ে কম হাত জিতলে নেগেটিভ পয়েন্ট হয়।
                         </div>
                     </div>
                 </div>
