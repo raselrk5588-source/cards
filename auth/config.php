@@ -2,7 +2,7 @@
 // config.php
 // এখানে আপনার BDApps এর App ID এবং Password দিন
 return [
-    'applicationId' => 'APP_139093',
-    'password' => '21b9eb4d3aeb97d2b65d022d6156080e'
+    'applicationId' => 'APP_139139',
+    'password' => '6baa0e2df09a74578c6775f811a5c00c'
 ];
 ?>
