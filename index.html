@@ -705,7 +705,7 @@
                 const data = await res.json();
 
                 if (data.success) {
-                    alert("আপনার সাবস্ক্রিপশন সফলভাবে বাতিল করা হয়েছে।");
+                    await (window.showCustomAlert ? window.showCustomAlert("বিজ্ঞপ্তি", "আপনার সাবস্ক্রিপশন সফলভাবে বাতিল করা হয়েছে।") : alert("আপনার সাবস্ক্রিপশন সফলভাবে বাতিল করা হয়েছে।"));
                     localStorage.clear();
                     window.location.href = 'auth/login.html';
                 } else {
@@ -713,13 +713,13 @@
                     
                     // If user is already unregistered or format is invalid, log them out gracefully
                     if (errorMsg.toLowerCase().includes("unregistered") || errorMsg.toLowerCase().includes("invalid")) {
-                        alert("আপনার সাবস্ক্রিপশন বাতিল করা হয়েছে।");
+                        await (window.showCustomAlert ? window.showCustomAlert("বিজ্ঞপ্তি", "আপনার সাবস্ক্রিপশন বাতিল করা হয়েছে।") : alert("আপনার সাবস্ক্রিপশন বাতিল করা হয়েছে।"));
                         localStorage.clear();
                         window.location.href = 'auth/login.html';
                         return;
                     }
                     
-                    alert(errorMsg);
+                    await (window.showCustomAlert ? window.showCustomAlert("বিজ্ঞপ্তি", errorMsg) : alert(errorMsg));
                     
                     btns.forEach(btn => {
                         btn.disabled = false;
@@ -727,7 +727,7 @@
                     });
                 }
             } catch (e) {
-                alert("Network error");
+                await (window.showCustomAlert ? window.showCustomAlert("বিজ্ঞপ্তি", "Network error") : alert("Network error"));
                 btns.forEach(btn => {
                     btn.disabled = false;
                     btn.innerHTML = "🚪 আনসাবস্ক্রাইব";

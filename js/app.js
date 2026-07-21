@@ -1139,6 +1139,48 @@ const App = (() => {
         });
     }
 
+    function showCustomAlert(title, message) {
+        return new Promise((resolve) => {
+            let overlay = document.getElementById("customAlertModal");
+            if (!overlay) {
+                overlay = document.createElement("div");
+                overlay.id = "customAlertModal";
+                overlay.className = "modal-overlay";
+                overlay.style.cssText = "display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); z-index: 999999; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(6px); font-family: 'Noto Sans Bengali', sans-serif;";
+                
+                overlay.innerHTML = `
+                    <div style="background: #0d1a12; border: 1.5px solid rgba(212, 168, 67, 0.5); border-radius: 20px; padding: 25px 20px; width: 88%; max-width: 340px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8);">
+                        <div style="font-size: 2.5rem; color: #d4a843; margin-bottom: 10px;">ℹ️</div>
+                        <h3 id="ca-title" style="color: #ffd700; font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; margin-top: 0;"></h3>
+                        <p id="ca-message" style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.5; margin-bottom: 22px;"></p>
+                        <button id="ca-btn" style="background: linear-gradient(135deg, #d4a843, #ffd700); color: #000; border: none; padding: 12px 32px; border-radius: 25px; font-size: 0.95rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 168, 67, 0.3);">ঠিক আছে</button>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+            }
+
+            const titleEl = overlay.querySelector("#ca-title");
+            const msgEl = overlay.querySelector("#ca-message");
+            const btn = overlay.querySelector("#ca-btn");
+
+            titleEl.textContent = title || "বিজ্ঞপ্তি";
+            msgEl.textContent = message || "";
+
+            overlay.style.display = "flex";
+            overlay.classList.add("show");
+
+            const handleClose = () => {
+                overlay.style.display = "none";
+                overlay.classList.remove("show");
+                btn.removeEventListener("click", handleClose);
+                resolve();
+            };
+
+            btn.addEventListener("click", handleClose);
+        });
+    }
+    window.showCustomAlert = showCustomAlert;
+
     async function unsubscribe() {
         const phone = localStorage.getItem('phone');
         if (!phone) {
@@ -1176,7 +1218,7 @@ const App = (() => {
             const data = await res.json();
 
             if (data.success) {
-                alert("আপনার সাবস্ক্রিপশন সফলভাবে বাতিল করা হয়েছে।");
+                await showCustomAlert("বিজ্ঞপ্তি", "আপনার সাবস্ক্রিপশন সফলভাবে বাতিল করা হয়েছে।");
                 localStorage.clear();
                 window.location.href = 'auth/login.html';
             } else {
@@ -1184,13 +1226,13 @@ const App = (() => {
                 
                 // If user is already unregistered or format is invalid, log them out gracefully
                 if (errorMsg.toLowerCase().includes("unregistered") || errorMsg.toLowerCase().includes("invalid")) {
-                    alert("আপনার সাবস্ক্রিপশন বাতিল করা হয়েছে।");
+                    await showCustomAlert("বিজ্ঞপ্তি", "আপনার সাবস্ক্রিপশন বাতিল করা হয়েছে।");
                     localStorage.clear();
                     window.location.href = 'auth/login.html';
                     return;
                 }
                 
-                alert(errorMsg);
+                await showCustomAlert("বিজ্ঞপ্তি", errorMsg);
                 
                 if (btn) {
                     btn.disabled = false;
@@ -1198,7 +1240,7 @@ const App = (() => {
                 }
             }
         } catch (e) {
-            alert("Network error");
+            await showCustomAlert("বিজ্ঞপ্তি", "Network error");
             if (btn) {
                 btn.disabled = false;
                 btn.innerHTML = "🚪 আনসাবস্ক্রাইব";
