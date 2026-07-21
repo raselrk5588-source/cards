@@ -1140,6 +1140,10 @@ const App = (() => {
     }
 
     function showCustomAlert(title, message) {
+        if (arguments.length === 1) {
+            message = title;
+            title = "বিজ্ঞপ্তি";
+        }
         return new Promise((resolve) => {
             let overlay = document.getElementById("customAlertModal");
             if (!overlay) {
@@ -1176,7 +1180,7 @@ const App = (() => {
                 resolve();
             };
 
-            btn.addEventListener("click", handleClose);
+            btn.onclick = handleClose;
         });
     }
     window.showCustomAlert = showCustomAlert;
