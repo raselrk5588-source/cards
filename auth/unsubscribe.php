@@ -97,11 +97,16 @@ if (!$result['ok']) {
 
 $response = $result['data'];
 $statusCode = strtoupper((string)($response['statusCode'] ?? ''));
-$subscriptionStatus = $response['subscriptionStatus'] ?? 'UNKNOWN';
+$subscriptionStatus = strtoupper((string)($response['subscriptionStatus'] ?? 'UNKNOWN'));
+$statusDetail = (string)($response['statusDetail'] ?? '');
+
+// Treat BDApps "User Already UnRegistered" or "invalid" statusDetail as success
+$isAlreadyUnregistered = (stripos($statusDetail, 'unregistered') !== false) || (stripos($statusDetail, 'invalid') !== false);
 
 $success =
     $statusCode === 'S1000' ||
-    strtoupper((string)$subscriptionStatus) === 'UNREGISTERED';
+    $subscriptionStatus === 'UNREGISTERED' ||
+    $isAlreadyUnregistered;
 
 if ($success) {
     // Delete user from Firebase so they lose rank/stats if they subscribe again later

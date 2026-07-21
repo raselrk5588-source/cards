@@ -710,14 +710,16 @@
                     window.location.href = 'auth/login.html';
                 } else {
                     const errorMsg = data.error || data.statusDetail || data.message || "আনসাবস্ক্রাইব করা সম্ভব হয়নি।";
-                    alert(errorMsg);
                     
-                    // If user is already unregistered or format is invalid, log them out
+                    // If user is already unregistered or format is invalid, log them out gracefully
                     if (errorMsg.toLowerCase().includes("unregistered") || errorMsg.toLowerCase().includes("invalid")) {
+                        alert("আপনার সাবস্ক্রিপশন বাতিল করা হয়েছে।");
                         localStorage.clear();
                         window.location.href = 'auth/login.html';
                         return;
                     }
+                    
+                    alert(errorMsg);
                     
                     btns.forEach(btn => {
                         btn.disabled = false;
